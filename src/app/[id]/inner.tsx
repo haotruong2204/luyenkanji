@@ -1,6 +1,5 @@
 "use client";
 
-import { useMediaQuery } from "react-responsive";
 import { Kanji } from "@/components/kanji";
 import { MobileLayout } from "@/components/mobile-layout";
 import { Radical } from "@/components/radical";
@@ -24,10 +23,20 @@ export function KanjiPageContent({
   graphData,
 }: KanjiPageContentProps) {
   const [isMounted, setIsMounted] = useState(false);
-  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
+
+    // Check if mobile after component mounts (client-side only)
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   // Memoize tabs config to prevent recreation on every render
