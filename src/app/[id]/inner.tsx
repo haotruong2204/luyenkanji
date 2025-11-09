@@ -35,7 +35,7 @@ export function KanjiPageContent({
     () => [
       {
         id: 0,
-        label: "漢字",
+        label: "Kanji",
         content: (
           <div className="p-4">
             <Kanji
@@ -49,16 +49,7 @@ export function KanjiPageContent({
       },
       {
         id: 1,
-        label: "例",
-        content: (
-          <div className="p-4">
-            <Radical kanjiInfo={kanjiInfo} />
-          </div>
-        ),
-      },
-      {
-        id: 2,
-        label: "部首",
+        label: "Từ vựng",
         content: (
           <ScrollArea className="size-full">
             <Examples kanjiInfo={kanjiInfo} />
@@ -66,19 +57,23 @@ export function KanjiPageContent({
         ),
       },
       {
-        id: 3,
-        label: "図",
-        content: <Graphs kanjiInfo={kanjiInfo} graphData={graphData} />,
+        id: 2,
+        label: "Sơ đồ",
+        content: (
+          <div className="size-full">
+            <Graphs kanjiInfo={kanjiInfo} graphData={graphData} />
+          </div>
+        ),
       },
       {
-        id: 4,
+        id: 3,
         label: (
-          <SearchIcon className="w-4 h-4 inline-block -translate-y-0.5" />
+          <SearchIcon className="w-3.5 h-3.5 inline-block" />
         ),
         content: (
           <div className="relative mt-8 p-4 flex flex-col items-center gap-12">
             <SearchInput searchPlaceholder="Search kanji..." />
-            <DrawInput />
+            <DrawInput fullWidth height={280} />
           </div>
         ),
       },
@@ -119,7 +114,7 @@ export function KanjiPageContent({
       <div className="grid grid-rows-[330px_1fr] overflow-hidden">
         <div className="grid grid-cols-[252px_1.5fr] border-b border-lighter overflow-hidden">
           <div className="flex flex-col items-center gap-2 mt-3">
-            <SearchInput searchPlaceholder="Tìm kiếm..." />
+            <SearchInput className="max-w-80 md:w-[220px]" searchPlaceholder="Tìm kiếm..." />
             <DrawInput />
           </div>
 

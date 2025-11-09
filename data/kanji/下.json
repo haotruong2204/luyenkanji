@@ -1,5 +1,7 @@
 {
   "id": "下",
+  "hanzi": "HẠ",
+  "story": "Một (一) lần đi xem bói (卜) là hạ (下) mình",
   "kanjialiveData": {
     "_id": "54317add791eba5146ee48f7",
     "_rev": "10-53f1ff9d350abe198cb70bfed6ba71a7",
@@ -8,12 +10,14 @@
     "hint_group": 1,
     "kunyomi": "shita, shimo, sa, sagaru, sageru, kuda, kudaru, kudasai, o, orosu, oriru",
     "meaning": "down",
+    "meaningVi": "dưới, hạ",
     "kstroke": 3,
     "examples": [
       {
         "japanese": "地下鉄（ちかてつ）",
         "meaning": {
-          "english": "subway"
+          "english": "subway",
+          "vietnamese": "tàu điện ngầm"
         },
         "audio": {
           "opus": "https://media.kanjialive.com/examples_audio/audio-opus/ge-shita_06_a.opus",
@@ -25,7 +29,8 @@
       {
         "japanese": "上下する（じょうげする）",
         "meaning": {
-          "english": "go up and down"
+          "english": "go up and down",
+          "vietnamese": "đi lên đi xuống, dao động"
         },
         "audio": {
           "opus": "https://media.kanjialive.com/examples_audio/audio-opus/ge-shita_06_b.opus",
@@ -37,7 +42,8 @@
       {
         "japanese": "下（した）",
         "meaning": {
-          "english": "under, below"
+          "english": "under, below",
+          "vietnamese": "dưới, phía dưới"
         },
         "audio": {
           "opus": "https://media.kanjialive.com/examples_audio/audio-opus/ge-shita_06_c.opus",
@@ -49,7 +55,8 @@
       {
         "japanese": "靴下（くつした）",
         "meaning": {
-          "english": "socks"
+          "english": "socks",
+          "vietnamese": "tất, vớ"
         },
         "audio": {
           "opus": "https://media.kanjialive.com/examples_audio/audio-opus/ge-shita_06_d.opus",
@@ -61,7 +68,8 @@
       {
         "japanese": "風下（かざしも）",
         "meaning": {
-          "english": "leeward"
+          "english": "leeward",
+          "vietnamese": "hướng gió, phía chắn gió"
         },
         "audio": {
           "opus": "https://media.kanjialive.com/examples_audio/audio-opus/ge-shita_06_e.opus",
@@ -73,7 +81,8 @@
       {
         "japanese": "下がる（さがる）",
         "meaning": {
-          "english": "hang down, fall, step back [v.i.]"
+          "english": "hang down, fall, step back [v.i.]",
+          "vietnamese": "treo xuống, rơi xuống, lùi lại"
         },
         "audio": {
           "opus": "https://media.kanjialive.com/examples_audio/audio-opus/ge-shita_06_f.opus",
@@ -85,7 +94,8 @@
       {
         "japanese": "下げる（さげる）",
         "meaning": {
-          "english": "hang, lower [v.t.]"
+          "english": "hang, lower [v.t.]",
+          "vietnamese": "treo, hạ xuống"
         },
         "audio": {
           "opus": "https://media.kanjialive.com/examples_audio/audio-opus/ge-shita_06_g.opus",
@@ -97,7 +107,8 @@
       {
         "japanese": "下る（くだる）",
         "meaning": {
-          "english": "descend"
+          "english": "descend",
+          "vietnamese": "đi xuống, hạ xuống"
         },
         "audio": {
           "opus": "https://media.kanjialive.com/examples_audio/audio-opus/ge-shita_06_h.opus",
@@ -109,7 +120,8 @@
       {
         "japanese": "下ろす（おろす）",
         "meaning": {
-          "english": "take down, lower [v.t.]"
+          "english": "take down, lower [v.t.]",
+          "vietnamese": "hạ xuống, đặt xuống"
         },
         "audio": {
           "opus": "https://media.kanjialive.com/examples_audio/audio-opus/ge-shita_06_i.opus",
@@ -121,7 +133,8 @@
       {
         "japanese": "下りる（おりる）",
         "meaning": {
-          "english": "get off [v.i.]"
+          "english": "get off [v.i.]",
+          "vietnamese": "xuống (xe, tàu)"
         },
         "audio": {
           "opus": "https://media.kanjialive.com/examples_audio/audio-opus/ge-shita_06_j.opus",
@@ -133,7 +146,8 @@
       {
         "japanese": "*下手（へた）",
         "meaning": {
-          "english": "unskillful"
+          "english": "unskillful",
+          "vietnamese": "kém, vụng về"
         },
         "audio": {
           "opus": "https://media.kanjialive.com/examples_audio/audio-opus/ge-shita_06_k.opus",
@@ -375,7 +389,7 @@
     "jlptLevel": "N5",
     "newspaperFrequencyRank": "97",
     "strokeCount": 3,
-    "meaning": "below, down, descend, give, low, inferior",
+    "meaning": "bên dưới, xuống, hạ xuống, cho, thấp, kém cỏi",
     "kunyomi": [
       "した",
       "しも",
@@ -398,144 +412,144 @@
       {
         "example": "下",
         "reading": "カ",
-        "meaning": "under (influence, control, conditions, etc. of), during (war, occupation, etc.)"
+        "meaning": "dưới (ảnh hưởng, kiểm soát, điều kiện, v.v.), trong (chiến tranh, chiếm đóng, v.v.)"
       },
       {
         "example": "下位",
         "reading": "カイ",
-        "meaning": "low rank, lower position, subordinate position, lower order (e.g. byte)"
+        "meaning": "thứ hạng thấp, vị trí thấp hơn, vị trí phụ thuộc, thứ tự thấp hơn (ví dụ: byte)"
       },
       {
         "example": "陛下",
         "reading": "ヘイカ",
-        "meaning": "Your Majesty, His Majesty, Her Majesty"
+        "meaning": "Bệ hạ, Hoàng thượng"
       },
       {
         "example": "最下",
         "reading": "サイカ",
-        "meaning": "the lowest, the worst"
+        "meaning": "thấp nhất, tệ nhất"
       },
       {
         "example": "下",
         "reading": "ゲ",
-        "meaning": "lowness (of degree, value, etc.), inferiority, second volume (of two), third volume (of three)"
+        "meaning": "sự thấp kém (về mức độ, giá trị, v.v.), sự kém cỏi, tập thứ hai (trong hai tập), tập thứ ba (trong ba tập)"
       },
       {
         "example": "下山",
         "reading": "ゲザン",
-        "meaning": "descending a mountain, descent"
+        "meaning": "xuống núi"
       },
       {
         "example": "取り下げ",
         "reading": "トリサゲ",
-        "meaning": "withdrawal, discontinuance, abandoning, dropping"
+        "meaning": "rút lui, ngừng lại, từ bỏ, bỏ"
       },
       {
         "example": "高下",
         "reading": "コウゲ",
-        "meaning": "rise and fall (e.g. prices), fluctuation, difference (rank, grade, quality, etc.), variation"
+        "meaning": "lên xuống (ví dụ: giá cả), dao động, sự khác biệt (hạng, cấp, chất lượng, v.v.), biến động"
       }
     ],
     "kunyomiExamples": [
       {
         "example": "下",
         "reading": "した",
-        "meaning": "below, down, under, younger (e.g. daughter), bottom, beneath, underneath, just after, right after, inferiority, one's inferior (i.e. one's junior), trade-in, preliminary, preparatory"
+        "meaning": "bên dưới, xuống, dưới, trẻ hơn (ví dụ: con gái), đáy, phía dưới, ngay sau, thấp kém, cấp dưới, đổi cũ lấy mới, sơ bộ, chuẩn bị"
       },
       {
         "example": "下請け",
         "reading": "したうけ",
-        "meaning": "subcontract, subcontractor (person or company)"
+        "meaning": "thầu phụ, nhà thầu phụ (người hoặc công ty)"
       },
       {
         "example": "幕下",
         "reading": "まくした",
-        "meaning": "third highest division, wrestlers of the third highest division"
+        "meaning": "hạng thứ ba cao nhất (sumo), đô vật hạng thứ ba cao nhất"
       },
       {
         "example": "上下",
         "reading": "うえした",
-        "meaning": "top and bottom, up and down, high and low, above and below, upper and lower ends, upside-down"
+        "meaning": "trên và dưới, lên và xuống, cao và thấp, phía trên và phía dưới, đầu trên và đầu dưới, ngược đầu"
       },
       {
         "example": "下",
         "reading": "しも",
-        "meaning": "lower reaches (of a river), bottom, lower part, lower half (of the body, esp. the privates), feces (faeces), urine, menses, end, far from the imperial palace (i.e. far from Kyoto, esp. of western Japan), dirty (e.g. dirty jokes, etc.)"
+        "meaning": "hạ lưu (của sông), đáy, phần dưới, nửa dưới (của cơ thể, đặc biệt là bộ phận sinh dục), phân, nước tiểu, kinh nguyệt, cuối, xa cung điện hoàng gia (tức là xa Kyoto, đặc biệt là Tây Nhật), bẩn (ví dụ: truyện cười bẩn, v.v.)"
       },
       {
         "example": "下期",
         "reading": "しもき",
-        "meaning": "second half of the (fiscal) year"
+        "meaning": "nửa cuối năm (tài chính)"
       },
       {
         "example": "風下",
         "reading": "かざしも",
-        "meaning": "leeward, lee, downwind"
+        "meaning": "hướng gió xuôi, phía gió"
       },
       {
         "example": "裃",
         "reading": "かみしも",
-        "meaning": "samurai costume, old ceremonial costume, top and bottom, up and down, high and low, above and below, upper and lower ends"
+        "meaning": "trang phục samurai, trang phục nghi lễ cũ, trên và dưới, lên và xuống, cao và thấp, trên và dưới, đầu trên và đầu dưới"
       },
       {
         "example": "下",
         "reading": "もと",
-        "meaning": "under (guidance, supervision, rules, the law, etc.), under (a flag, the sun, etc.), beneath, with (e.g. one blow), on (the promise, condition, assumption, etc. that ...), in (e.g. the name of ...), (someone's) side, (someone's) location"
+        "meaning": "dưới (sự hướng dẫn, giám sát, quy tắc, pháp luật, v.v.), dưới (lá cờ, mặt trời, v.v.), bên dưới, với (ví dụ: một cú đánh), trên (lời hứa, điều kiện, giả định, v.v. rằng...), trong (ví dụ: tên của...), phía (ai đó), vị trí (của ai đó)"
       },
       {
         "example": "山元",
         "reading": "やまもと",
-        "meaning": "foot of a mountain, base of a mountain, mine, colliery, owner of a mountain, operator of a mine"
+        "meaning": "chân núi, gốc núi, mỏ, hầm mỏ, chủ núi, người điều hành mỏ"
       },
       {
         "example": "お膝元",
         "reading": "おひざもと",
-        "meaning": "beside a nobleman, close aid (of a nobleman, etc.), place where a high ranking person resides, one's own city (of a shogun, lord, etc.), Imperial capital, Imperial court, (shogun's) headquarters, place under one's direct control, one's own turf, one's own backyard"
+        "meaning": "bên cạnh quý tộc, trợ lý thân cận (của quý tộc, v.v.), nơi người có địa vị cao cư trú, thành phố riêng (của shogun, lãnh chúa, v.v.), thủ đô hoàng gia, cung điện hoàng gia, trụ sở (của shogun), nơi dưới sự kiểm soát trực tiếp của mình, sân nhà của mình, sân sau của mình"
       },
       {
         "example": "下げる",
         "reading": "さげる",
-        "meaning": "to hang, to suspend, to wear (e.g. decoration), to lower, to reduce, to bring down, to demote, to move back, to pull back, to clear (plates), to remove (food, etc. from table or altar), to keep on playing after one has formed a scoring combination with captured cards"
+        "meaning": "treo, treo lơ lửng, đeo (ví dụ: trang trí), hạ xuống, giảm, hạ thấp, giáng cấp, lùi lại, kéo lại, dọn (đĩa), dọn (thức ăn, v.v. từ bàn hoặc bàn thờ), tiếp tục chơi sau khi đã tạo thành kết hợp ghi điểm với các lá bài đã bắt được"
       },
       {
         "example": "下がる",
         "reading": "さがる",
-        "meaning": "to come down, to go down, to fall, to drop, to sink, to get lower, to hang, to dangle, to move back, to step back, to withdraw, to retire, to deteriorate, to fall off, to be downgraded, to get closer to the present day, below, south of"
+        "meaning": "xuống, đi xuống, rơi, giảm, chìm, thấp hơn, treo, lủng lẳng, lùi lại, bước lùi, rút lui, nghỉ hưu, xấu đi, giảm sút, bị giảm cấp, gần hơn với ngày hiện tại, bên dưới, phía nam"
       },
       {
         "example": "下る",
         "reading": "くだる",
-        "meaning": "to descend, to go down, to come down, to be handed down (of an order, judgment, etc.), to pass (of time), to surrender, to capitulate, to be less than, to be inferior to, to have the runs, to have diarrhea, to pass (in stool), to be discharged from the body, to depreciate oneself, to be humble"
+        "meaning": "đi xuống, hạ xuống, được trao xuống (của lệnh, phán quyết, v.v.), trôi qua (thời gian), đầu hàng, đầu hàng, ít hơn, kém cỏi hơn, bị tiêu chảy, đi tiêu, đi ra (trong phân), được thải ra khỏi cơ thể, hạ thấp bản thân, khiêm tốn"
       },
       {
         "example": "下り",
         "reading": "くだり",
-        "meaning": "down-train, train heading toward the ending point of its route, down-slope, downward going, downbound (esp. away from Tokyo), downstream, downhill"
+        "meaning": "tàu đi xuống, tàu hướng về điểm cuối của tuyến đường, dốc xuống, đi xuống, đi xuống (đặc biệt là ra khỏi Tokyo), xuôi dòng, xuống dốc"
       },
       {
         "example": "下り坂",
         "reading": "くだりざか",
-        "meaning": "downhill, downward slope, descent, decline, waning, ebb, (going) downhill"
+        "meaning": "xuống dốc, dốc xuống, đi xuống, suy giảm, tàn lụi, (đang) xuống dốc"
       },
       {
         "example": "下す",
         "reading": "くだす",
-        "meaning": "to make a decision, to draw a conclusion, to give a judgement, to hand down a verdict, to pass a sentence, to give an order, to let go down, to lower, to do oneself, to do by oneself, to beat, to defeat, to have loose bowels, to have diarrhea, to pass (in stool), to discharge from the body, to do in one go, to do to the end without stopping"
+        "meaning": "đưa ra quyết định, rút ra kết luận, đưa ra phán quyết, tuyên án, đưa ra lệnh, cho xuống, hạ xuống, tự làm, tự làm lấy, đánh bại, chiến thắng, bị tiêu chảy, đi tiêu, đi ra (trong phân), thải ra khỏi cơ thể, làm một lúc, làm đến cùng không dừng"
       },
       {
         "example": "下さる",
         "reading": "くださる",
-        "meaning": "to give, to confer, to bestow, to kindly do for one, to oblige, to favour, to favor"
+        "meaning": "cho, trao, ban tặng, vui lòng làm cho ai đó, giúp đỡ, ủng hộ"
       },
       {
         "example": "下ろす",
         "reading": "おろす",
-        "meaning": "to take down, to bring down, to lower (a hand, flag, shutter, etc.), to drop (an anchor, curtain, etc.), to let down (hair), to launch (a boat), to drop off (a passenger), to let off, to unload (goods, a truck, etc.), to offload, to discharge, to withdraw (money), to use for the first time, to wear for the first time, to cut off, to fillet (fish), to grate (e.g. radish), to prune (branches), to remove (someone from a position), to oust, to drop, to clear (the table), to remove (offerings from an altar), to pass down (e.g. old clothes), to hand down, to expel from the body (e.g. worms), to abort (a fetus), to invoke (a spirit), to call down"
+        "meaning": "hạ xuống, đưa xuống, hạ (tay, cờ, cửa chớp, v.v.), thả (neo, rèm, v.v.), buông (tóc), hạ thủy (thuyền), cho xuống (hành khách), để xuống, dỡ hàng (hàng hóa, xe tải, v.v.), dỡ tải, rút (tiền), sử dụng lần đầu, mặc lần đầu, cắt bỏ, phi lê (cá), nạo (ví dụ: củ cải), tỉa (cành), loại bỏ (ai đó khỏi vị trí), lật đổ, thả, dọn (bàn), dọn (đồ cúng khỏi bàn thờ), truyền xuống (ví dụ: quần áo cũ), trao lại, trục xuất khỏi cơ thể (ví dụ: giun), phá thai, triệu hồi (linh hồn), gọi xuống"
       },
       {
         "example": "降りる",
         "reading": "おりる",
-        "meaning": "to descend (e.g. a mountain), to go down, to come down, to alight (e.g. from bus), to get off, to disembark, to dismount, to step down, to retire, to give up, to quit, to fold, to be granted, to be issued, to be given, to form (of frost, dew, mist, etc.), to be passed (from the body; e.g. of a roundworm)"
+        "meaning": "xuống (ví dụ: núi), đi xuống, đến xuống, xuống (ví dụ: từ xe buýt), xuống xe, lên bờ, xuống ngựa, bước xuống, nghỉ hưu, từ bỏ, bỏ cuộc, xếp bài, được cấp, được phát hành, được trao, hình thành (sương giá, sương, sương mù, v.v.), được truyền ra (từ cơ thể; ví dụ: giun đũa)"
       }
     ],
     "radical": {

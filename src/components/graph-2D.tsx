@@ -87,7 +87,7 @@ const Graph2D: React.FC<Props> = ({
   ) => {
     const label = String(node.id);
     const fontSize = 6;
-    ctx.font = `${fontSize}px Sans-Serif`;
+    ctx.font = `${fontSize}px "Zen Maru Gothic", Sans-Serif`;
     const textWidth = ctx.measureText(label).width;
     const bckgDimensions = [textWidth, fontSize].map((n) => n + fontSize * 0.2); // some padding
 
@@ -155,6 +155,9 @@ const Graph2D: React.FC<Props> = ({
       height={bounds.height}
       backgroundColor={"var(--color-background)"}
       graphData={data}
+      enableNodeDrag={true}
+      enableZoomInteraction={true}
+      enablePanInteraction={true}
       nodeLabel={(n) => {
         const node = n as NodeObjectWithData;
         return `${node.data.jishoData?.kunyomi}<br/>${node.data.jishoData?.meaning}`;
@@ -166,7 +169,7 @@ const Graph2D: React.FC<Props> = ({
         const label = String(node.id);
         // const fontSize = 24 / globalScale;
         const fontSize = 6;
-        ctx.font = `${fontSize}px Sans-Serif`;
+        ctx.font = `${fontSize}px "Zen Maru Gothic", Sans-Serif`;
         const textWidth = ctx.measureText(label).width;
         const bckgDimensions = [textWidth, fontSize].map(
           (n) => n + fontSize * 0.2
@@ -211,7 +214,7 @@ const Graph2D: React.FC<Props> = ({
 
           const label = String(linkText);
           const fontSize = 4;
-          ctx.font = `${fontSize}px Sans-Serif`;
+          ctx.font = `${fontSize}px "Zen Maru Gothic", Sans-Serif`;
 
           ctx.save();
           x && y && ctx.translate(x, y);

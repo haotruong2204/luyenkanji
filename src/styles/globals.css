@@ -132,8 +132,10 @@
 @layer components {
   .kanji-svg-container {
     svg {
-      width: 80px !important;
-      height: 80px !important;
+      width: 100% !important;
+      height: 100% !important;
+      max-width: 100% !important;
+      max-height: 100% !important;
     }
     svg path[id] {
       fill: hsl(var(--accent)) !important;
@@ -141,5 +143,13 @@
     svg path[clip-path] {
       stroke: hsl(var(--foreground)) !important;
     }
+  }
+
+  /* KanjiVG Animation - Scale SVG to fit container */
+  .kanjiVG {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
   }
 }

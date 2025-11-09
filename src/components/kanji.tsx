@@ -14,21 +14,22 @@ interface Props {
 
 export const Kanji = ({ kanji, kanjiInfo, graphData, screen }: Props) => {
   return (
-    <div className="min-h-[330px] relative size-full overflow-hidden grid grid-rows-[36px_1fr] md:grid-cols-[30%_70%] grid-cols-1">
-      <div className="flex" 
-        style={{
-          padding: "48px 20px"
-        }}
+    <div className="min-h-[330px] relative size-full overflow-hidden flex flex-col md:grid md:grid-cols-[30%_70%]">
+      {/* Animation Section */}
+      <div className="flex w-full justify-center items-center p-4 md:p-12" 
       >
-        <KanjiStrokeAnimationDynamic
-          key={kanji}
-          kanji={kanji}
-          animationSpeed={600}
-          showButton={true}
-          size={screen === "mobile" ? 200 : 220}
-        />
+        <div className={screen === "mobile" ? "w-full max-w-[320px]" : ""}>
+          <KanjiStrokeAnimationDynamic
+            key={kanji}
+            kanji={kanji}
+            animationSpeed={600}
+            showButton={true}
+            size={screen === "mobile" ? 300 : 220}
+          />
+        </div>
       </div>
 
+      {/* Info Section */}
       <div className="flex flex-col p-4 space-y-2">
         <h1 className="text-4xl leading-tight sm:text-4xl" 
             style={{

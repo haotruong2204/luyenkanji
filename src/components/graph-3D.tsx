@@ -204,6 +204,9 @@ const Graph3D = ({
       height={bounds.height}
       backgroundColor={"#00000000"}
       graphData={data}
+      enableNodeDrag={true}
+      enableNavigationControls={true}
+      enablePointerInteraction={true}
       linkColor={() => {
         return resolvedTheme === "dark" ? "#ffffff" : "#000000";
       }}
@@ -234,7 +237,6 @@ const Graph3D = ({
       linkDirectionalParticleSpeed={0.004}
       linkDirectionalParticleWidth={showParticles ? 1 : 0.001}
       linkDirectionalParticleResolution={8}
-      enableNavigationControls={true}
       showNavInfo={false}
       ref={fg3DRef}
       // warmupTicks={120}
@@ -275,12 +277,13 @@ const Graph3D = ({
 
         // If it's a single character
         const sprite = new SpriteText(String(node.id));
-        sprite.fontFace =
-          "Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif";
+        sprite.fontFace = "Zen Maru Gothic, sans-serif";
         sprite.color = "#000";
         sprite.textHeight = 10;
         sprite.fontSize = 120;
         sprite.padding = 3;
+        // Center the text
+        sprite.center.set(0.5, 0.5);
 
         const group = new THREE.Group();
         group.add(sprite);
@@ -301,6 +304,8 @@ const Graph3D = ({
         let sprite: SpriteText;
         if (linkText && linkText.length > 0) {
           sprite = new SpriteText(linkText.join(", "));
+          sprite.fontFace = "Zen Maru Gothic, sans-serif";
+          sprite.center.set(0.5, 0.5);
         } else {
           return null;
         }

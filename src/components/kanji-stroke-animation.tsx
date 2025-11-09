@@ -197,11 +197,17 @@ export function KanjiStrokeAnimation({
     <div className={`relative ${className}`} suppressHydrationWarning style={{ width: size, height: size }}>
       <div
         ref={containerRef}
-        className="cursor-pointer rounded-lg border border-border bg-card p-4 transition-shadow hover:shadow-md w-full h-full"
+        className="cursor-pointer rounded-lg border border-border bg-card p-4 transition-shadow hover:shadow-md w-full h-full flex items-center justify-center"
         dangerouslySetInnerHTML={{ __html: svgContent }}
         onClick={!showButton ? playAnimation : undefined}
         title={!showButton ? "Click để xem thứ tự nét" : undefined}
         suppressHydrationWarning
+        style={{
+          // Make SVG inside scale to fit container
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
       />
 
       {showButton && (

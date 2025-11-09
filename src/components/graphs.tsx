@@ -69,11 +69,32 @@ export const Graphs: React.FC<Props> = ({ kanjiInfo, graphData }) => {
   };
 
   const pathname = usePathname();
+  const [isMounted, setIsMounted] = React.useState(false);
+
+  // Detect if mobile
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Auto zoom to fit on mobile when graph is rendered
+  React.useEffect(() => {
+    if (!isMounted) return;
+    
+    const isMobile = window.innerWidth < 768; // md breakpoint
+    if (isMobile) {
+      // Longer delay to ensure graph is fully rendered with all nodes
+      const timer = setTimeout(() => {
+        setRandom(Date.now());
+      }, 400);
+      return () => clearTimeout(timer);
+    }
+  }, [isMounted, pathname, style, kanjiInfo?.id]); // Trigger when any of these change
 
   if (!kanjiInfo) return <></>;
 
   return (
     <div ref={measureRef} className="relative size-full graphs">
+      {/* Tabs */}
       <div className="absolute top-4 left-4 z-50">
         <Tabs
           defaultValue={style}
@@ -110,6 +131,7 @@ export const Graphs: React.FC<Props> = ({ kanjiInfo, graphData }) => {
           />
         )}
       </div>
+      {/* Control buttons */}
       <div className="absolute top-0 right-0 p-4 flex gap-1">
         <div style={{ display: style === "3D" ? "block" : "none" }}>
           <Tooltip>
@@ -117,7 +139,7 @@ export const Graphs: React.FC<Props> = ({ kanjiInfo, graphData }) => {
               <Toggle
                 className={cn("size-10", rotate ? "bg-accent" : "")}
                 variant="outline"
-                aria-label="Autorotate"
+                aria-label="Tự động xoay"
                 pressed={rotate}
                 onPressedChange={handleRotateChange}
               >
@@ -125,7 +147,7 @@ export const Graphs: React.FC<Props> = ({ kanjiInfo, graphData }) => {
               </Toggle>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Autorotate</p>
+              <p>Tự động xoay</p>
             </TooltipContent>
           </Tooltip>
         </div>
@@ -136,7 +158,7 @@ export const Graphs: React.FC<Props> = ({ kanjiInfo, graphData }) => {
               <Toggle
                 className={cn("size-10", particles ? "bg-accent" : "")}
                 variant="outline"
-                aria-label="Show arrow particles"
+                aria-label="Hiển thị hạt mũi tên"
                 pressed={particles}
                 onPressedChange={handleParticlesChange}
               >
@@ -144,7 +166,7 @@ export const Graphs: React.FC<Props> = ({ kanjiInfo, graphData }) => {
               </Toggle>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Show arrow particles</p>
+              <p>Hiển thị hạt mũi tên</p>
             </TooltipContent>
           </Tooltip>
         </div>
@@ -154,7 +176,7 @@ export const Graphs: React.FC<Props> = ({ kanjiInfo, graphData }) => {
               <Toggle
                 className={cn("size-10", outLinks ? "bg-accent" : "")}
                 variant="outline"
-                aria-label="Show out links"
+                aria-label="Hiển thị liên kết ra"
                 pressed={outLinks}
                 onPressedChange={handleOutLinksChange}
               >
@@ -162,7 +184,7 @@ export const Graphs: React.FC<Props> = ({ kanjiInfo, graphData }) => {
               </Toggle>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Show outgoing links</p>
+              <p>Hiển thị liên kết ra</p>
             </TooltipContent>
           </Tooltip>
         </div>
@@ -172,14 +194,14 @@ export const Graphs: React.FC<Props> = ({ kanjiInfo, graphData }) => {
               <Button
                 variant="outline"
                 size="icon"
-                aria-label="Fit to screen"
+                aria-label="Vừa với màn hình"
                 onClick={handleZoomToFit}
               >
                 <MaximizeIcon className="size-4" />
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Zoom to fit</p>
+              <p>Thu phóng vừa khít</p>
             </TooltipContent>
           </Tooltip>
         </div>

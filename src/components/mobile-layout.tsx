@@ -64,8 +64,8 @@ export const MobileLayout = ({
           ))}
         </CarouselContent>
       </Carousel>
-      <div className="fixed bottom-0 left-0 right-0 flex gap-2 items-center">
-        {Array.from({ length: 5 }).map((_, i) => (
+      <div className="fixed bottom-0 left-0 right-0 grid grid-cols-4 gap-2 p-2 items-center">
+        {Array.from({ length: 4 }).map((_, i) => (
           <Button size="icon" key={i} onClick={() => api?.scrollTo(i)}>
             {i + 1}
           </Button>
@@ -73,7 +73,7 @@ export const MobileLayout = ({
       </div>
       <div
         className={cn(
-          "absolute bg-background bottom-0 space-x-1 border-t cursor-pointer px-[3px] py-[3.2px] shadow-inner-shadow w-full grid grid-cols-5 shrink-0"
+          "absolute bg-background bottom-0 border-t cursor-pointer px-[3px] py-[3.2px] shadow-inner-shadow w-full grid grid-cols-4 gap-1 shrink-0"
         )}
       >
         {tabs.map((tab, idx) => (
@@ -82,7 +82,7 @@ export const MobileLayout = ({
             onClick={() => handleTabClick(idx)}
             disabled={activeTab === idx ? false : disabled}
             className={cn(
-              "relative px-3.5 py-1.5 sm:text-sm font-medium transition focus-visible:outline-1 focus-visible:ring-1 focus-visible:outline-hidden flex gap-2 items-center",
+              "relative px-3.5 py-1.5 text-sm font-medium transition focus-visible:outline-1 focus-visible:ring-1 focus-visible:outline-hidden flex items-center justify-center",
               activeTab === idx ? "text-foreground!" : " text-foreground/50"
             )}
             style={{ WebkitTapHighlightColor: "transparent" }}

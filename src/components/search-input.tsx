@@ -16,6 +16,7 @@ import {
 import { ChevronsUpDown } from "lucide-react";
 import { Virtuoso } from "react-virtuoso";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 import searchlist from "@/../data/searchlist.json";
 import composition from "@/../data/composition.json";
@@ -97,7 +98,7 @@ const VirtualizedCommand = ({
       <CommandInput onValueChange={handleSearch} placeholder={placeholder} />
       <CommandList style={{ height, overflow: "auto" }}>
         {flattenedOptions.length === 0 ? (
-          <CommandEmpty>No results found.</CommandEmpty>
+          <CommandEmpty>Không có kết quả nào.</CommandEmpty>
         ) : (
           <Virtuoso
             data={flattenedOptions}
@@ -131,11 +132,17 @@ const VirtualizedCommand = ({
   );
 };
 
+interface SearchInputProps {
+  searchPlaceholder?: string;
+  className?: string;
+  popoverHeight?: string; // Height of dropdown, default "215px"
+}
+
 export const SearchInput = ({
   searchPlaceholder = "Search kanji...",
-}: {
-  searchPlaceholder?: string;
-}) => {
+  className = "",
+  popoverHeight = "215px",
+}: SearchInputProps) => {
   const router = useRouter();
 
   const [open, setOpen] = React.useState<boolean>(false);
@@ -149,15 +156,15 @@ export const SearchInput = ({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full max-w-80 md:w-[220px] justify-between"
+          className={cn("w-full justify-between", className)}
         >
           {selectedOption ? `${selectedOption.kanji}` : searchPlaceholder}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="p-0 w-full max-w-80 md:w-[220px]">
+      <PopoverContent className="p-0 w-(--radix-popover-trigger-width)">
         <VirtualizedCommand
-          height={"215px"}
+          height={popoverHeight}
           options={OPTIONS}
           placeholder={searchPlaceholder}
           selectedOption={selectedOption}

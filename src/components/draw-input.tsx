@@ -9,18 +9,51 @@ import { TouchIsolator } from "./touch-isolator";
 import { Button, buttonVariants } from "./ui/button";
 import { useTheme } from "next-themes";
 
-export const DrawInput: React.FC = () => {
+interface DrawInputProps {
+  className?: string;
+  height?: number;
+  width?: number;
+  fullWidth?: boolean;
+}
+
+export const DrawInput: React.FC<DrawInputProps> = ({ 
+  className = "",
+  height = 220,
+  width = 220,
+  fullWidth = false
+}) => {
   const canvasRef = React.useRef(null);
+  const containerRef = React.useRef<HTMLDivElement>(null);
   const [canvas, setCanvas] = React.useState<InstanceType<
     typeof Handwriting.Canvas
   > | null>(null);
   const [inputSuggestions, setInputSuggestions] = React.useState<string[]>([]);
+  const recognizeTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  const [dimensions, setDimensions] = React.useState({ width, height });
 
   const { resolvedTheme } = useTheme();
 
+  // Handle responsive sizing when fullWidth is true
+  React.useEffect(() => {
+    if (!fullWidth || !containerRef.current) return;
+
+    const updateDimensions = () => {
+      if (containerRef.current) {
+        const containerWidth = containerRef.current.offsetWidth;
+        // Maintain aspect ratio (use height prop or default)
+        const newHeight = height || containerWidth;
+        setDimensions({ width: containerWidth, height: newHeight });
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, [fullWidth, height]);
+
   const inputOptions = {
-    width: 220,
-    height: 220,
+    width: fullWidth ? dimensions.width : width,
+    height: fullWidth ? dimensions.height : height,
     language: "ja",
     numOfWords: 1,
     numOfReturn: 64,
@@ -51,6 +84,42 @@ export const DrawInput: React.FC = () => {
     }
   }, [resolvedTheme]);
 
+  // Auto-recognize after drawing stops
+  React.useEffect(() => {
+    if (!canvas) return;
+
+    const handleMouseUp = () => {
+      // Clear previous timeout
+      if (recognizeTimeoutRef.current) {
+        clearTimeout(recognizeTimeoutRef.current);
+      }
+      
+      // Recognize after a short delay (300ms after user stops drawing)
+      recognizeTimeoutRef.current = setTimeout(() => {
+        const trace = canvas.getTrace();
+        if (trace.length > 0) {
+          canvas.recognize(trace, inputOptions, inputCallback);
+        }
+      }, 300);
+    };
+
+    const handleTouchEnd = handleMouseUp;
+
+    const canvasElement = canvasRef.current as HTMLCanvasElement | null;
+    if (canvasElement) {
+      canvasElement.addEventListener("mouseup", handleMouseUp);
+      canvasElement.addEventListener("touchend", handleTouchEnd);
+
+      return () => {
+        canvasElement.removeEventListener("mouseup", handleMouseUp);
+        canvasElement.removeEventListener("touchend", handleTouchEnd);
+        if (recognizeTimeoutRef.current) {
+          clearTimeout(recognizeTimeoutRef.current);
+        }
+      };
+    }
+  }, [canvas]);
+
   const recognizeKanji = () => {
     canvas && canvas.recognize(canvas.getTrace(), inputOptions, inputCallback);
   };
@@ -61,19 +130,36 @@ export const DrawInput: React.FC = () => {
   };
 
   return (
-    <div className="relative w-[220px] h-[220px] mx-auto bg-background">
-      <div className="absolute left-1/2 h-full border-l border-dashed border-slate-600/20 dark:border-slate-600/60 pointer-events-none z-10" />
-      <div className="absolute top-1/2 w-full border-t border-dashed border-slate-600/20 dark:border-slate-600/60 pointer-events-none z-10" />
+    <div 
+      ref={containerRef}
+      className={cn("relative bg-background", fullWidth ? "w-full" : "mx-auto", className)} 
+      style={fullWidth ? { height: dimensions.height } : { width: width, height: height }}
+    >
+      <div 
+        className="absolute border-l border-dashed border-slate-600/20 dark:border-slate-600/60 pointer-events-none z-10" 
+        style={{ 
+          left: fullWidth ? `${dimensions.width / 2}px` : '50%',
+          height: fullWidth ? `${dimensions.height}px` : '100%'
+        }}
+      />
+      <div 
+        className="absolute border-t border-dashed border-slate-600/20 dark:border-slate-600/60 pointer-events-none z-10" 
+        style={{ 
+          top: fullWidth ? `${dimensions.height / 2}px` : '50%',
+          width: fullWidth ? `${dimensions.width}px` : '100%'
+        }}
+      />
       <TouchIsolator>
         <canvas
-          width={220}
-          height={220}
+          width={fullWidth ? dimensions.width : width}
+          height={fullWidth ? dimensions.height : height}
           ref={canvasRef}
           id="handInput"
-          className="relative w-[220px] h-[220px] border border-light rounded-lg cursor-crosshair bg-muted"
+          className="relative border border-light rounded-lg cursor-crosshair bg-muted w-full"
+          style={fullWidth ? { height: dimensions.height } : { width: width, height: height }}
         />
       </TouchIsolator>
-      <div className="h-10 w-full pt-2 flex items-center justify-between">
+      <div className="h-10 w-full pt-2 flex items-center justify-start gap-2">
         <Button
           aria-label="Clear canvas"
           variant="destructive"
@@ -93,15 +179,6 @@ export const DrawInput: React.FC = () => {
             {suggestion}
           </Link>
         ))}
-        <Button
-          variant="default"
-          size="icon"
-          className="w-8 h-8 shrink-0"
-          aria-label="Recognize"
-          onClick={recognizeKanji}
-        >
-          <SearchIcon className="w-4 h-4" />
-        </Button>
       </div>
     </div>
   );
