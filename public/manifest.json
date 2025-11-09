@@ -1,0 +1,32 @@
+{
+    "theme_color": "#2b99cf",
+    "background_color": "#fff",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/",
+    "name": "Nhai Kanji - Học Chữ Hán",
+    "short_name": "NhaiKanji",
+    "description": "Công cụ học chữ Hán tiếng Nhật, hiển thị thông tin và phân tích cấu tạo Kanji dưới dạng đồ thị tương tác.",
+    "icons": [
+        {
+            "src": "/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
