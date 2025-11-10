@@ -92,7 +92,30 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${notoSansJp.variable} ${radicalsFont.variable} ${caveat.variable} ${comfortaa.variable} ${itim.variable} ${kablammo.variable} ${vt323.variable} ${zenMaruGothic.variable}`}
     >
-      <body 
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Remove browser extension attributes before React hydration
+              (function() {
+                var observer = new MutationObserver(function(mutations) {
+                  mutations.forEach(function(mutation) {
+                    if (mutation.target.nodeType === 1) {
+                      mutation.target.removeAttribute('bis_skin_checked');
+                    }
+                  });
+                });
+                observer.observe(document.documentElement, {
+                  attributes: true,
+                  attributeFilter: ['bis_skin_checked'],
+                  subtree: true
+                });
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body
         className="w-screen h-screen overflow-hidden bg-background text-foreground selection:bg-primary"
         suppressHydrationWarning
       >
