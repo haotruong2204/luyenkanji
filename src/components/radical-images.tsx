@@ -9,12 +9,19 @@ export const RadicalImages = ({
 }) => {
   const [index, setIndex] = React.useState(0);
   const [invert, setInvert] = React.useState(0);
+  const [isMounted, setIsMounted] = React.useState(false);
 
   const { resolvedTheme } = useTheme();
 
+  // Ensure client-side only rendering
   React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  React.useEffect(() => {
+    if (!isMounted) return;
     resolvedTheme === "dark" ? setInvert(1) : setInvert(0);
-  }, [resolvedTheme]);
+  }, [resolvedTheme, isMounted]);
 
   React.useEffect(() => {
     const interval = setInterval(
@@ -25,6 +32,14 @@ export const RadicalImages = ({
       clearInterval(interval);
     };
   }, [radicalImageArray.length]);
+
+  if (!isMounted) {
+    return (
+      <div className="relative w-full h-full">
+        <div className="absolute w-full h-full bg-no-repeat bg-contain" />
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-full h-full">

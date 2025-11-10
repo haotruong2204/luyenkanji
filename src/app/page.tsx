@@ -91,8 +91,8 @@ export default function Home() {
               <div className="text-muted-foreground">Từ vựng đi kèm</div>
             </div>
             <div className="p-4 rounded-lg border bg-card">
-              <div className="text-2xl font-bold text-primary">Nhai từ vựng</div>
-              <div className="text-muted-foreground">JLPT N5 - N1</div>
+              <div className="text-2xl font-bold text-primary">Nhai</div>
+              <div className="text-muted-foreground">Từ vựng JLPT</div>
             </div>
           </div>
         </div>

@@ -8,7 +8,6 @@ import {
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
-import { Button } from "./ui/button";
 import * as React from "react";
 
 type Tab = {
@@ -64,13 +63,6 @@ export const MobileLayout = ({
           ))}
         </CarouselContent>
       </Carousel>
-      <div className="fixed bottom-0 left-0 right-0 grid grid-cols-4 gap-2 p-2 items-center">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <Button size="icon" key={i} onClick={() => api?.scrollTo(i)}>
-            {i + 1}
-          </Button>
-        ))}
-      </div>
       <div
         className={cn(
           "absolute bg-background bottom-0 border-t cursor-pointer px-[3px] py-[3.2px] shadow-inner-shadow w-full grid grid-cols-4 gap-1 shrink-0"
