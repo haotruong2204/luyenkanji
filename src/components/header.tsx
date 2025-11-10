@@ -43,7 +43,7 @@ export const Header = ({
             </Link>
           </TooltipTrigger>
           <TooltipContent>
-            <p>About this website</p>
+            <p>Thông tin</p>
           </TooltipContent>
         </Tooltip>
         <Tooltip>
@@ -51,7 +51,7 @@ export const Header = ({
             <ThemeSwitcherButton />
           </TooltipTrigger>
           <TooltipContent>
-            <p>Change theme</p>
+            <p>Thay đổi giao diện</p>
           </TooltipContent>
         </Tooltip>
       </div>
