@@ -13,6 +13,7 @@ import {
 import localFont from "next/font/local";
 import "../styles/globals.css";
 import { Metadata } from "next";
+import { Sidebar } from "@/components/sidebar/sidebar";
 
 export const metadata: Metadata = {
   title: { default: "The Kanji Map", template: "%s | The Kanji Map" },
@@ -136,7 +137,10 @@ export default function RootLayout({
           <TooltipProvider>
             <JotaiProvider>
               <div className="isolate size-full" suppressHydrationWarning>
-                {children}
+                <Sidebar />
+                <main className="ml-64 h-screen overflow-y-auto bg-gray-50 dark:bg-[#0D1117]">
+                  {children}
+                </main>
               </div>
             </JotaiProvider>
           </TooltipProvider>
