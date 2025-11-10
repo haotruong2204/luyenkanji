@@ -6,6 +6,10 @@ import { AnimatedCounter } from "@/components/ui/animated-counter";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { StreakCounter } from "@/components/gamification/streak-counter";
+import { DailyProgress } from "@/components/gamification/daily-progress";
+import { AchievementBadge } from "@/components/gamification/achievement-badge";
+import { ProgressRing } from "@/components/gamification/progress-ring";
 
 export default function Home() {
   return (
@@ -171,6 +175,122 @@ export default function Home() {
               title="Dark Mode"
               description="Giao diện tối bảo vệ mắt, phù hợp học ban đêm"
             />
+          </div>
+        </div>
+      </section>
+
+      {/* GAMIFICATION SECTION - Make Learning Fun */}
+      <section className="from-primary/5 w-full border-y bg-gradient-to-b to-transparent py-20 md:py-32">
+        <div className="container mx-auto px-4">
+          <div className="mb-16 text-center">
+            <Badge variant="gradient" className="mb-4">
+              🎮 Gamification
+            </Badge>
+            <h2 className="mb-4 text-4xl font-bold md:text-5xl">
+              Học tập trở nên <span className="text-primary">thú vị hơn</span>
+            </h2>
+            <p className="text-muted-foreground mx-auto max-w-2xl text-lg font-light">
+              Theo dõi tiến trình, duy trì streak, và mở khóa thành tích khi học
+              Kanji
+            </p>
+          </div>
+
+          <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-3">
+            {/* Left Column - Streak & Progress */}
+            <div className="space-y-6">
+              <div>
+                <h3 className="mb-4 text-xl font-semibold">
+                  🔥 Streak & Tiến độ
+                </h3>
+                <div className="space-y-4">
+                  <StreakCounter currentStreak={7} longestStreak={15} />
+
+                  <div className="bg-card rounded-xl border p-6">
+                    <DailyProgress current={12} goal={20} />
+                  </div>
+
+                  <div className="bg-card rounded-xl border p-6">
+                    <DailyProgress
+                      current={45}
+                      goal={50}
+                      label="Kanji tuần này"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Middle Column - Progress Ring */}
+            <div className="flex flex-col items-center justify-center space-y-6">
+              <div>
+                <h3 className="mb-6 text-center text-xl font-semibold">
+                  📊 Tổng quan học tập
+                </h3>
+                <div className="flex flex-col items-center gap-6">
+                  <ProgressRing
+                    progress={68}
+                    size={180}
+                    strokeWidth={12}
+                    label="Hoàn thành khóa học"
+                  />
+
+                  <div className="grid w-full grid-cols-2 gap-4">
+                    <div className="bg-card rounded-lg border p-4 text-center">
+                      <div className="text-primary mb-1 text-2xl font-bold">
+                        156
+                      </div>
+                      <div className="text-muted-foreground text-xs">
+                        Kanji đã học
+                      </div>
+                    </div>
+                    <div className="bg-card rounded-lg border p-4 text-center">
+                      <div className="text-primary mb-1 text-2xl font-bold">
+                        89%
+                      </div>
+                      <div className="text-muted-foreground text-xs">
+                        Độ chính xác
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column - Achievements */}
+            <div>
+              <h3 className="mb-4 text-xl font-semibold">🏆 Thành tích</h3>
+              <div className="space-y-4">
+                <AchievementBadge
+                  icon="🌟"
+                  title="Người mới"
+                  description="Hoàn thành bài học đầu tiên"
+                  unlocked={true}
+                />
+                <AchievementBadge
+                  icon="🔥"
+                  title="Streak Master"
+                  description="Học 7 ngày liên tục"
+                  unlocked={true}
+                />
+                <AchievementBadge
+                  icon="📚"
+                  title="Nhà sưu tập"
+                  description="Học 100 kanji"
+                  unlocked={false}
+                  progress={65}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* CTA for Gamification */}
+          <div className="mt-16 text-center">
+            <p className="text-muted-foreground mb-6 text-sm">
+              Đăng nhập để lưu tiến trình và mở khóa tất cả tính năng
+            </p>
+            <Button size="lg" className="bg-primary hover:bg-primary/90">
+              Bắt đầu ngay - Miễn phí
+            </Button>
           </div>
         </div>
       </section>
