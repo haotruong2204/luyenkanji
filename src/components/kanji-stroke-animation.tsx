@@ -115,10 +115,9 @@ export function KanjiStrokeAnimation({
       // Script already loaded
       timeoutId = setTimeout(initAnimation, 100);
     } else {
-      // Load script
+      // Load script from local public folder
       const script = document.createElement("script");
-      script.src =
-        "https://cdn.jsdelivr.net/npm/kanjivganimate@0.2.1/dist/KanjivgAnimate.min.js";
+      script.src = "/scripts/KanjivgAnimate.min.js";
       script.onload = () => {
         if (mounted) {
           timeoutId = setTimeout(initAnimation, 100);
