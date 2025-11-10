@@ -18,49 +18,27 @@ export function FeatureCard({
   className,
   ...props
 }: FeatureCardProps) {
-  const [isHovered, setIsHovered] = React.useState(false);
-
   return (
     <div
       className={cn(
-        "group bg-card relative overflow-hidden rounded-2xl border p-6 transition-all duration-300 hover:shadow-lg",
-        gradient &&
-          "hover:shadow-primary/20 hover:border-transparent hover:shadow-2xl",
+        "group bg-card hover:border-primary/20 relative rounded-xl border p-8 transition-all duration-200 hover:shadow-md",
         className
       )}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       {...props}
     >
-      {/* Gradient overlay on hover */}
-      {gradient && (
-        <div
-          className={cn(
-            "gradient-primary absolute inset-0 opacity-0 transition-opacity duration-300",
-            isHovered && "opacity-5"
-          )}
-        />
-      )}
-
-      <div className="relative z-10">
+      <div className="space-y-4">
         {icon && (
-          <div
-            className={cn(
-              "mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl transition-all duration-300",
-              gradient
-                ? "from-primary/10 text-primary bg-gradient-to-br to-purple-500/10 group-hover:scale-110"
-                : "bg-muted text-muted-foreground"
-            )}
-          >
+          <div className="bg-primary/10 text-primary inline-flex h-12 w-12 items-center justify-center rounded-lg text-2xl">
             {icon}
           </div>
         )}
 
-        <h3 className="group-hover:text-primary mb-2 text-lg font-semibold transition-colors duration-300">
-          {title}
-        </h3>
-
-        <p className="text-muted-foreground text-sm">{description}</p>
+        <div className="space-y-2">
+          <h3 className="text-lg font-semibold">{title}</h3>
+          <p className="text-muted-foreground text-sm leading-relaxed">
+            {description}
+          </p>
+        </div>
       </div>
     </div>
   );
