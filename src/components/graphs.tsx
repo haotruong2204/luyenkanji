@@ -62,10 +62,10 @@ export const Graphs: React.FC<Props> = ({ kanjiInfo, graphData }) => {
   };
 
   const [tabValue] = React.useState(0);
-  const [random, setRandom] = React.useState<number>(Date.now());
+  const [random, setRandom] = React.useState<number>(0);
 
   const handleZoomToFit = () => {
-    setRandom(Date.now());
+    setRandom(prev => prev + 1);
   };
 
   const pathname = usePathname();
@@ -79,12 +79,12 @@ export const Graphs: React.FC<Props> = ({ kanjiInfo, graphData }) => {
   // Auto zoom to fit on mobile when graph is rendered
   React.useEffect(() => {
     if (!isMounted) return;
-    
+
     const isMobile = window.innerWidth < 768; // md breakpoint
     if (isMobile) {
       // Longer delay to ensure graph is fully rendered with all nodes
       const timer = setTimeout(() => {
-        setRandom(Date.now());
+        setRandom(prev => prev + 1);
       }, 400);
       return () => clearTimeout(timer);
     }

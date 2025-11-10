@@ -1,6 +1,5 @@
 "use client";
 
-import { useMediaQuery } from "react-responsive";
 import { Kanji } from "@/components/kanji";
 import { MobileLayout } from "@/components/mobile-layout";
 import { Radical } from "@/components/radical";
@@ -24,7 +23,6 @@ export function KanjiPageContent({
   graphData,
 }: KanjiPageContentProps) {
   const [isMounted, setIsMounted] = useState(false);
-  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
   useEffect(() => {
     setIsMounted(true);
@@ -81,36 +79,15 @@ export function KanjiPageContent({
     [kanji, kanjiInfo, graphData]
   );
 
-  // Loading state - prevent hydration mismatch
-  if (!isMounted) {
-    return (
-      <div
-        className="flex h-screen w-full items-center justify-center"
-        suppressHydrationWarning
-      >
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-      </div>
-    );
-  }
-
-  // Mobile layout
-  if (isMobile) {
-    return (
-      <div
-        className="w-full grow md:hidden overflow-hidden"
-        suppressHydrationWarning
-      >
+  return (
+    <>
+      {/* Mobile layout - show only on mobile */}
+      <div className="w-full grow md:hidden overflow-hidden">
         <MobileLayout tabs={mobileTabsConfig} initialActiveTab={0} />
       </div>
-    );
-  }
 
-  // Desktop layout
-  return (
-    <div
-      className="size-full grow hidden md:grid md:grid-cols-[60%_40%] overflow-hidden"
-      suppressHydrationWarning
-    >
+      {/* Desktop layout - show only on desktop */}
+      <div className="size-full grow hidden md:grid md:grid-cols-[60%_40%] overflow-hidden">
       <div className="grid grid-rows-[330px_1fr] overflow-hidden">
         <div className="grid grid-cols-[252px_1.5fr] border-b border-lighter overflow-hidden">
           <div className="flex flex-col items-center gap-2 mt-3">
@@ -140,6 +117,7 @@ export function KanjiPageContent({
           <Examples kanjiInfo={kanjiInfo} />
         </div>
       </ScrollArea>
-    </div>
+      </div>
+    </>
   );
 }
