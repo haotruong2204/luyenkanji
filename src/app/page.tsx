@@ -10,6 +10,7 @@ import { StreakCounter } from "@/components/gamification/streak-counter";
 import { DailyProgress } from "@/components/gamification/daily-progress";
 import { AchievementBadge } from "@/components/gamification/achievement-badge";
 import { ProgressRing } from "@/components/gamification/progress-ring";
+import { LearningPathCard } from "@/components/learning-paths/learning-path-card";
 
 export default function Home() {
   return (
@@ -175,6 +176,115 @@ export default function Home() {
               title="Dark Mode"
               description="Giao diện tối bảo vệ mắt, phù hợp học ban đêm"
             />
+          </div>
+        </div>
+      </section>
+
+      {/* LEARNING PATHS SECTION - Fullstack.edu.vn Style */}
+      <section className="w-full border-y bg-gradient-to-b from-orange-50/50 via-white to-white py-20 md:py-32 dark:from-orange-950/10 dark:via-[#0D1117] dark:to-[#0D1117]">
+        <div className="container mx-auto px-4">
+          <div className="mb-16 text-center">
+            <Badge
+              variant="default"
+              className="mb-4 bg-orange-500 hover:bg-orange-600"
+            >
+              🎓 Lộ trình học tập
+            </Badge>
+            <h2 className="mb-4 text-4xl font-bold md:text-5xl">
+              Chọn lộ trình phù hợp với{" "}
+              <span className="text-orange-600 dark:text-orange-400">
+                mục tiêu
+              </span>{" "}
+              của bạn
+            </h2>
+            <p className="text-muted-foreground mx-auto max-w-2xl text-lg font-light">
+              Từ cơ bản đến nâng cao, lộ trình học kanji được thiết kế theo cấp
+              độ JLPT
+            </p>
+          </div>
+
+          {/* Learning Path Cards Grid */}
+          <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <LearningPathCard
+              title="Kanji Sơ Cấp"
+              description="Nền tảng cho người mới bắt đầu. Học 103 kanji cơ bản nhất, giúp bạn đọc được các văn bản đơn giản."
+              level="N5"
+              kanjiCount={103}
+              duration="2-3 tháng"
+              learners={1245}
+              progress={0}
+            />
+
+            <LearningPathCard
+              title="Kanji Sơ Trung Cấp"
+              description="Mở rộng vốn kanji lên 320 ký tự. Đủ cho giao tiếp hàng ngày và đọc hiểu cơ bản."
+              level="N4"
+              kanjiCount={320}
+              duration="3-4 tháng"
+              learners={892}
+              progress={0}
+            />
+
+            <LearningPathCard
+              title="Kanji Trung Cấp"
+              description="Học 650 kanji thông dụng. Đọc được sách báo và nội dung web tiếng Nhật thông thường."
+              level="N3"
+              kanjiCount={650}
+              duration="4-6 tháng"
+              learners={654}
+              progress={0}
+            />
+
+            <LearningPathCard
+              title="Kanji Trung Cao Cấp"
+              description="Nâng cao với 1000 kanji. Đủ khả năng đọc sách, báo và tài liệu chuyên môn."
+              level="N2"
+              kanjiCount={1000}
+              duration="6-8 tháng"
+              learners={423}
+              progress={0}
+            />
+
+            <LearningPathCard
+              title="Kanji Cao Cấp"
+              description="Master 2136 kanji Joyo. Đọc hiểu mọi loại văn bản, sách, báo chuyên ngành."
+              level="N1"
+              kanjiCount={2136}
+              duration="8-12 tháng"
+              learners={287}
+              progress={0}
+            />
+
+            {/* Custom Path Card */}
+            <div className="group border-primary/30 bg-card/50 hover:border-primary hover:bg-card relative overflow-hidden rounded-2xl border-2 border-dashed p-6 transition-all duration-300 hover:shadow-xl">
+              <div className="flex h-full flex-col items-center justify-center space-y-4 text-center">
+                <div className="bg-primary/10 flex h-16 w-16 items-center justify-center rounded-full text-3xl">
+                  ✨
+                </div>
+                <div>
+                  <h3 className="mb-2 text-xl font-bold">Lộ trình tùy chỉnh</h3>
+                  <p className="text-muted-foreground text-sm">
+                    Tạo lộ trình học riêng theo nhu cầu của bạn
+                  </p>
+                </div>
+                <Button
+                  variant="outline"
+                  className="group-hover:bg-primary group-hover:text-primary-foreground"
+                >
+                  Tạo lộ trình
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="mt-12 text-center">
+            <p className="text-muted-foreground mb-6 text-sm">
+              Không chắc nên bắt đầu từ đâu?{" "}
+              <button className="text-primary font-medium hover:underline">
+                Làm bài test trình độ
+              </button>
+            </p>
           </div>
         </div>
       </section>
