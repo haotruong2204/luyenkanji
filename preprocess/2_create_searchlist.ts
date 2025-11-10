@@ -34,7 +34,9 @@ const getKanjiInfoWithRetry = async (
 
       // Handle 404 - kanji doesn't exist in Jisho
       if (status === 404) {
-        console.log(`⚠ 404 Not Found for ${id} - kanji doesn't exist in Jisho`);
+        console.log(
+          `⚠ 404 Not Found for ${id} - kanji doesn't exist in Jisho`
+        );
         return null;
       }
 

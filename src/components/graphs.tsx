@@ -65,7 +65,7 @@ export const Graphs: React.FC<Props> = ({ kanjiInfo, graphData }) => {
   const [random, setRandom] = React.useState<number>(0);
 
   const handleZoomToFit = () => {
-    setRandom(prev => prev + 1);
+    setRandom((prev) => prev + 1);
   };
 
   const pathname = usePathname();
@@ -84,7 +84,7 @@ export const Graphs: React.FC<Props> = ({ kanjiInfo, graphData }) => {
     if (isMobile) {
       // Longer delay to ensure graph is fully rendered with all nodes
       const timer = setTimeout(() => {
-        setRandom(prev => prev + 1);
+        setRandom((prev) => prev + 1);
       }, 400);
       return () => clearTimeout(timer);
     }
@@ -93,7 +93,7 @@ export const Graphs: React.FC<Props> = ({ kanjiInfo, graphData }) => {
   if (!kanjiInfo) return <></>;
 
   return (
-    <div ref={measureRef} className="relative size-full graphs">
+    <div ref={measureRef} className="graphs relative size-full">
       {/* Tabs */}
       <div className="absolute top-4 left-4 z-50">
         <Tabs
@@ -132,7 +132,7 @@ export const Graphs: React.FC<Props> = ({ kanjiInfo, graphData }) => {
         )}
       </div>
       {/* Control buttons */}
-      <div className="absolute top-0 right-0 p-4 flex gap-1">
+      <div className="absolute top-0 right-0 flex gap-1 p-4">
         <div style={{ display: style === "3D" ? "block" : "none" }}>
           <Tooltip>
             <TooltipTrigger asChild>

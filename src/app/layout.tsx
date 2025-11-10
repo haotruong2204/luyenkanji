@@ -1,19 +1,30 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Provider as JotaiProvider } from "jotai";
-import { Noto_Sans_JP, Caveat, Comfortaa, Itim, Kablammo, VT323, Zen_Maru_Gothic } from "next/font/google";
+import {
+  Noto_Sans_JP,
+  Caveat,
+  Comfortaa,
+  Itim,
+  Kablammo,
+  VT323,
+  Zen_Maru_Gothic,
+} from "next/font/google";
 import localFont from "next/font/local";
 import "../styles/globals.css";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: { default: "The Kanji Map", template: "%s | The Kanji Map" },
+  title: {
+    default: "Trang chủ",
+    template: "%s | Nhaitungvung.com by @thocodehoctiengnhat",
+  },
   description:
-    "The Kanji Map is a Japanese language learning tool that shows kanji information and decomposition in graph form.",
+    "Nhaitungvung.com by @thocodehoctiengnhat là một công cụ học tiếng Nhật hiển thị thông tin chữ Kanji và cách phân tích dưới dạng biểu đồ.",
   openGraph: {
-    title: "The Kanji Map",
+    title: "Nhaitungvung.com by @thocodehoctiengnhat",
     description:
-      "The Kanji Map is a Japanese language learning tool that shows kanji information and decomposition in graph form.",
+      "Nhaitungvung.com by @thocodehoctiengnhat là một công cụ học tiếng Nhật hiển thị thông tin chữ Kanji và cách phân tích dưới dạng biểu đồ.",
   },
   icons: {
     icon: "/favicon.svg",
@@ -92,8 +103,8 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${notoSansJp.variable} ${radicalsFont.variable} ${caveat.variable} ${comfortaa.variable} ${itim.variable} ${kablammo.variable} ${vt323.variable} ${zenMaruGothic.variable}`}
     >
-      <body 
-        className="w-screen h-screen overflow-hidden bg-background text-foreground selection:bg-primary"
+      <body
+        className="bg-background text-foreground selection:bg-primary h-screen w-screen overflow-hidden"
         suppressHydrationWarning
       >
         <ThemeProvider

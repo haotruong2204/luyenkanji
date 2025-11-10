@@ -35,14 +35,14 @@ export const RadicalImages = ({
 
   if (!isMounted) {
     return (
-      <div className="relative w-full h-full">
-        <div className="absolute w-full h-full bg-no-repeat bg-contain" />
+      <div className="relative h-full w-full">
+        <div className="absolute h-full w-full bg-contain bg-no-repeat" />
       </div>
     );
   }
 
   return (
-    <div className="relative w-full h-full">
+    <div className="relative h-full w-full">
       <AnimatePresence>
         {radicalImageArray.map((image, idx) =>
           idx === index ? (
@@ -52,7 +52,7 @@ export const RadicalImages = ({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 1, ease: "easeInOut" }}
-              className={`absolute w-full h-full bg-no-repeat bg-contain ${
+              className={`absolute h-full w-full bg-contain bg-no-repeat ${
                 invert ? "invert" : ""
               }`}
               style={{

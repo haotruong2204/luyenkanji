@@ -25,14 +25,14 @@ export const Examples = ({ kanjiInfo }: { kanjiInfo: KanjiInfo | null }) => {
   };
 
   return (
-    <div className="size-full grid grid-rows-[36px_1fr] p-4 mb-14">
+    <div className="mb-14 grid size-full grid-rows-[36px_1fr] p-4">
       <div>
         <h3 className="text-lg font-extrabold">Từ vựng đi kèm</h3>
       </div>
       <div>
         {/* KANJIALIVE With AUDIO */}
         {kanjiInfo?.kanjialiveData?.examples && (
-          <h5 className="text-foreground/50 text-sm my-2">
+          <h5 className="text-foreground/50 my-2 text-sm">
             Ví dụ kèm âm thanh
           </h5>
         )}
@@ -40,7 +40,7 @@ export const Examples = ({ kanjiInfo }: { kanjiInfo: KanjiInfo | null }) => {
           (example: any, index: number) => {
             return (
               <div
-                className="flex justify-between align-end odd:bg-muted rounded-lg items-center pl-2"
+                className="align-end odd:bg-muted flex items-center justify-between rounded-lg pl-2"
                 key={index}
               >
                 <p>
@@ -70,13 +70,13 @@ export const Examples = ({ kanjiInfo }: { kanjiInfo: KanjiInfo | null }) => {
         {/* JISHO */}
         {kanjiInfo?.jishoData?.onyomiExamples &&
           kanjiInfo?.jishoData?.onyomiExamples?.length !== 0 && (
-            <h5 className="text-foreground/50 text-sm my-2">Ví dụ âm On</h5>
+            <h5 className="text-foreground/50 my-2 text-sm">Ví dụ âm On</h5>
           )}
         {kanjiInfo?.jishoData?.onyomiExamples?.map(
           (onExample: any, index: number) => (
             <div
               key={index}
-              className="flex justify-between align-end odd:bg-muted rounded-lg items-center p-2"
+              className="align-end odd:bg-muted flex items-center justify-between rounded-lg p-2"
             >
               <p>
                 {highlightKanji(onExample?.example)}
@@ -88,15 +88,13 @@ export const Examples = ({ kanjiInfo }: { kanjiInfo: KanjiInfo | null }) => {
         )}
         {kanjiInfo?.jishoData?.kunyomiExamples &&
           kanjiInfo?.jishoData?.kunyomiExamples?.length !== 0 && (
-            <h5 className="text-foreground/50 text-sm my-2">
-              Ví dụ âm Kun
-            </h5>
+            <h5 className="text-foreground/50 my-2 text-sm">Ví dụ âm Kun</h5>
           )}
         {kanjiInfo?.jishoData?.kunyomiExamples?.map(
           (kunExample: any, index: number) => (
             <div
               key={index}
-              className="flex justify-between align-end odd:bg-muted rounded-lg items-center p-2"
+              className="align-end odd:bg-muted flex items-center justify-between rounded-lg p-2"
             >
               <p>
                 {highlightKanji(kunExample?.example)}

@@ -103,12 +103,12 @@ export function KanjiStrokeAnimation({ svgContent, strokeCount }: Props) {
         className="cursor-pointer"
         onClick={handleSvgClick}
       />
-      <div className="flex flex-row items-center gap-2 mt-2">
+      <div className="mt-2 flex flex-row items-center gap-2">
         <Button
           variant="link"
           size="icon"
           onClick={handlePlayPauseClick}
-          className="h-6 w-6 p-0 m-0"
+          className="m-0 h-6 w-6 p-0"
         >
           {isPlaying ? (
             <CirclePauseIcon className="h-4 w-4" />
@@ -121,7 +121,7 @@ export function KanjiStrokeAnimation({ svgContent, strokeCount }: Props) {
           max={totalLength}
           value={[drawProgress]}
           onValueChange={(vals: number[]) => setDrawProgress(vals[0])}
-          className="w-20 h-4"
+          className="h-4 w-20"
           disabled={totalLength === 0}
           onPointerDown={handleSliderMouseDown}
           onPointerUp={handleSliderMouseUp}

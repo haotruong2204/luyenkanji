@@ -135,7 +135,7 @@ export function KanjiStrokeAnimation({
         className={`flex items-center justify-center ${className}`}
         style={{ width: size, height: size }}
       >
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+        <div className="border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent" />
       </div>
     );
   }
@@ -157,35 +157,39 @@ export function KanjiStrokeAnimation({
         className={`flex items-center justify-center ${className}`}
         style={{ width: size, height: size }}
       >
-        <div className="text-sm text-muted-foreground">{error}</div>
+        <div className="text-muted-foreground text-sm">{error}</div>
       </div>
     );
   }
 
   return (
-    <div className={`relative ${className}`} suppressHydrationWarning style={{ width: size, height: size }}>
+    <div
+      className={`relative ${className}`}
+      suppressHydrationWarning
+      style={{ width: size, height: size }}
+    >
       <div
         ref={containerRef}
-        className="cursor-pointer rounded-lg border border-border bg-card p-4 transition-shadow hover:shadow-md w-full h-full flex items-center justify-center"
+        className="border-border bg-card flex h-full w-full cursor-pointer items-center justify-center rounded-lg border p-4 transition-shadow hover:shadow-md"
         dangerouslySetInnerHTML={{ __html: svgContent }}
         onClick={!showButton ? playAnimation : undefined}
         title={!showButton ? "Click để xem thứ tự nét" : undefined}
         suppressHydrationWarning
         style={{
           // Make SVG inside scale to fit container
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       />
 
       {showButton && (
         <button
           onClick={playAnimation}
-          className="absolute bottom-2 right-2 rounded-full bg-primary p-2 text-primary-foreground transition-all hover:bg-primary/90 hover:scale-110 shadow-lg"
+          className="bg-primary text-primary-foreground hover:bg-primary/90 absolute right-2 bottom-2 rounded-full p-2 shadow-lg transition-all hover:scale-110"
           title="Xem thứ tự nét"
         >
-          <ClipboardPenLine className="w-5 h-5" />
+          <ClipboardPenLine className="h-5 w-5" />
         </button>
       )}
     </div>
