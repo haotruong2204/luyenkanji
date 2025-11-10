@@ -3,6 +3,7 @@
 import { getKanjiVGForAnimation } from "@/lib/kanjivg";
 import { useEffect, useRef, useState } from "react";
 import { ClipboardPenLine } from "lucide-react";
+import KanjivgAnimate from "kanjivganimate";
 
 interface KanjiStrokeAnimationProps {
   kanji: string;
@@ -81,52 +82,22 @@ export function KanjiStrokeAnimation({
     let timeoutId: NodeJS.Timeout;
     let mounted = true;
 
-    const initAnimation = () => {
-      if (!mounted || !containerRef.current) return;
+    try {
+      // Initialize animation with imported module
+      new KanjivgAnimate(".kanjiVG", animationSpeed);
 
-      const KanjivgAnimate = window.KanjivgAnimate;
-      if (!KanjivgAnimate) {
-        console.warn("KanjivgAnimate not loaded yet");
-        return;
+      // Auto play if enabled
+      if (autoPlay && containerRef.current) {
+        timeoutId = setTimeout(() => {
+          if (mounted && containerRef.current) {
+            containerRef.current
+              .querySelector(".kanjiVG")
+              ?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+          }
+        }, 100);
       }
-
-      try {
-        new KanjivgAnimate(".kanjiVG", animationSpeed);
-
-        // Auto play if enabled
-        if (autoPlay && containerRef.current) {
-          timeoutId = setTimeout(() => {
-            if (mounted && containerRef.current) {
-              containerRef.current
-                .querySelector(".kanjiVG")
-                ?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-            }
-          }, 100);
-        }
-      } catch (err) {
-        console.error("Failed to initialize kanjivganimate:", err);
-      }
-    };
-
-    // Load script if not already present
-    const existingScript = document.querySelector('script[src*="KanjivgAnimate"]');
-    
-    if (existingScript) {
-      // Script already loaded
-      timeoutId = setTimeout(initAnimation, 100);
-    } else {
-      // Load script from local public folder
-      const script = document.createElement("script");
-      script.src = "/scripts/KanjivgAnimate.min.js";
-      script.onload = () => {
-        if (mounted) {
-          timeoutId = setTimeout(initAnimation, 100);
-        }
-      };
-      script.onerror = () => {
-        console.error("Failed to load kanjivganimate script");
-      };
-      document.head.appendChild(script);
+    } catch (err) {
+      console.error("Failed to initialize kanjivganimate:", err);
     }
 
     return () => {
@@ -144,11 +115,10 @@ export function KanjiStrokeAnimation({
 
     // Reinitialize animation after DOM update
     setTimeout(() => {
-      const KanjivgAnimate = window.KanjivgAnimate;
-      if (KanjivgAnimate && containerRef.current) {
+      if (containerRef.current) {
         // Create new animation instance with fresh SVG
         new KanjivgAnimate(".kanjiVG", animationSpeed);
-        
+
         // Trigger animation immediately
         const svg = containerRef.current.querySelector(".kanjiVG");
         if (svg) {
