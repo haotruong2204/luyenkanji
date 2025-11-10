@@ -11,17 +11,19 @@ export const metadata: Metadata = {
 const About = () => {
   return (
     <>
-      <div className="relative h-screen grid grid-rows-[50px_1fr]">
+      <div className="relative grid h-screen grid-rows-[50px_1fr]">
         <Header route="about" />
         <ScrollArea className="w-full">
-          <div className="p-4 max-w-2xl mx-auto mb-8">
-            <h1 className="text-3xl font-extrabold tracking-tight mt-4 mb-4">
+          <div className="mx-auto mb-8 max-w-2xl p-4">
+            <h1 className="mt-4 mb-4 text-3xl font-extrabold tracking-tight">
               Thông tin
             </h1>
             <p>
-              Luyenkanji.com là nền tảng website học tiếng Nhật hiển thị thông tin và cách phân tích (chiết tự) của chữ Kanji dưới dạng sơ đồ (biểu đồ kết nối)
+              Luyenkanji.com là nền tảng website học tiếng Nhật hiển thị thông
+              tin và cách phân tích (chiết tự) của chữ Kanji dưới dạng sơ đồ
+              (biểu đồ kết nối)
             </p>
-            <h1 className="text-3xl font-extrabold tracking-tight mt-8 mb-4">
+            <h1 className="mt-8 mb-4 text-3xl font-extrabold tracking-tight">
               Đóng góp
             </h1>
             <a

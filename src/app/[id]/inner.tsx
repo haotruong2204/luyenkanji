@@ -65,11 +65,9 @@ export function KanjiPageContent({
       },
       {
         id: 3,
-        label: (
-          <SearchIcon className="w-3.5 h-3.5 inline-block" />
-        ),
+        label: <SearchIcon className="inline-block h-3.5 w-3.5" />,
         content: (
-          <div className="relative mt-8 p-4 flex flex-col items-center gap-12">
+          <div className="relative mt-8 flex flex-col items-center gap-12 p-4">
             <SearchInput searchPlaceholder="Search kanji..." />
             <DrawInput fullWidth height={280} />
           </div>
@@ -82,41 +80,44 @@ export function KanjiPageContent({
   return (
     <>
       {/* Mobile layout - show only on mobile */}
-      <div className="w-full grow md:hidden overflow-hidden">
+      <div className="w-full grow overflow-hidden md:hidden">
         <MobileLayout tabs={mobileTabsConfig} initialActiveTab={0} />
       </div>
 
       {/* Desktop layout - show only on desktop */}
-      <div className="size-full grow hidden md:grid md:grid-cols-[60%_40%] overflow-hidden">
-      <div className="grid grid-rows-[330px_1fr] overflow-hidden">
-        <div className="grid grid-cols-[252px_1.5fr] border-b border-lighter overflow-hidden">
-          <div className="flex flex-col items-center gap-2 mt-3">
-            <SearchInput className="max-w-80 md:w-[220px]" searchPlaceholder="Tìm kiếm..." />
-            <DrawInput />
+      <div className="hidden size-full grow overflow-hidden md:grid md:grid-cols-[60%_40%]">
+        <div className="grid grid-rows-[330px_1fr] overflow-hidden">
+          <div className="border-lighter grid grid-cols-[252px_1.5fr] overflow-hidden border-b">
+            <div className="mt-3 flex flex-col items-center gap-2">
+              <SearchInput
+                className="max-w-80 md:w-[220px]"
+                searchPlaceholder="Tìm kiếm..."
+              />
+              <DrawInput />
+            </div>
+
+            <ScrollArea className="h-full w-full">
+              <div className="border-l p-4">
+                <Kanji
+                  kanji={kanji}
+                  screen="desktop"
+                  kanjiInfo={kanjiInfo}
+                  graphData={graphData}
+                />
+              </div>
+            </ScrollArea>
           </div>
 
-          <ScrollArea className="w-full h-full">
-            <div className="p-4 border-l">
-              <Kanji
-                kanji={kanji}
-                screen="desktop"
-                kanjiInfo={kanjiInfo}
-                graphData={graphData}
-              />
-            </div>
-          </ScrollArea>
+          <div className="overflow-hidden border-l">
+            <Graphs kanjiInfo={kanjiInfo} graphData={graphData} />
+          </div>
         </div>
 
-        <div className="border-l overflow-hidden">
-          <Graphs kanjiInfo={kanjiInfo} graphData={graphData} />
-        </div>
-      </div>
-
-      <ScrollArea className="w-full h-full border-l">
-        <div className="p-4">
-          <Examples kanjiInfo={kanjiInfo} />
-        </div>
-      </ScrollArea>
+        <ScrollArea className="h-full w-full border-l">
+          <div className="p-4">
+            <Examples kanjiInfo={kanjiInfo} />
+          </div>
+        </ScrollArea>
       </div>
     </>
   );

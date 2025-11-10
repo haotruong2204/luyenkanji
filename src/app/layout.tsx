@@ -1,7 +1,15 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Provider as JotaiProvider } from "jotai";
-import { Noto_Sans_JP, Caveat, Comfortaa, Itim, Kablammo, VT323, Zen_Maru_Gothic } from "next/font/google";
+import {
+  Noto_Sans_JP,
+  Caveat,
+  Comfortaa,
+  Itim,
+  Kablammo,
+  VT323,
+  Zen_Maru_Gothic,
+} from "next/font/google";
 import localFont from "next/font/local";
 import "../styles/globals.css";
 import { Metadata } from "next";
@@ -116,7 +124,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="w-screen h-screen overflow-hidden bg-background text-foreground selection:bg-primary"
+        className="bg-background text-foreground selection:bg-primary h-screen w-screen overflow-hidden"
         suppressHydrationWarning
       >
         <ThemeProvider

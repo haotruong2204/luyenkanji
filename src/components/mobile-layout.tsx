@@ -64,7 +64,7 @@ export const MobileLayout = ({
           ))}
         </CarouselContent>
       </Carousel>
-      <div className="fixed bottom-0 left-0 right-0 grid grid-cols-4 gap-2 p-2 items-center">
+      <div className="fixed right-0 bottom-0 left-0 grid grid-cols-4 items-center gap-2 p-2">
         {Array.from({ length: 4 }).map((_, i) => (
           <Button size="icon" key={i} onClick={() => api?.scrollTo(i)}>
             {i + 1}
@@ -73,7 +73,7 @@ export const MobileLayout = ({
       </div>
       <div
         className={cn(
-          "absolute bg-background bottom-0 border-t cursor-pointer px-[3px] py-[3.2px] shadow-inner-shadow w-full grid grid-cols-4 gap-1 shrink-0"
+          "bg-background shadow-inner-shadow absolute bottom-0 grid w-full shrink-0 cursor-pointer grid-cols-4 gap-1 border-t px-[3px] py-[3.2px]"
         )}
       >
         {tabs.map((tab, idx) => (
@@ -82,15 +82,15 @@ export const MobileLayout = ({
             onClick={() => handleTabClick(idx)}
             disabled={activeTab === idx ? false : disabled}
             className={cn(
-              "relative px-3.5 py-1.5 text-sm font-medium transition focus-visible:outline-1 focus-visible:ring-1 focus-visible:outline-hidden flex items-center justify-center",
-              activeTab === idx ? "text-foreground!" : " text-foreground/50"
+              "relative flex items-center justify-center px-3.5 py-1.5 text-sm font-medium transition focus-visible:ring-1 focus-visible:outline-hidden focus-visible:outline-1",
+              activeTab === idx ? "text-foreground!" : "text-foreground/50"
             )}
             style={{ WebkitTapHighlightColor: "transparent" }}
           >
             {activeTab === idx && (
               <motion.span
                 layoutId="bubble"
-                className="absolute inset-0 z-10 bg-muted/50 mix-blend-screen shadow-inner-shadow border rounded-md"
+                className="bg-muted/50 shadow-inner-shadow absolute inset-0 z-10 rounded-md border mix-blend-screen"
                 transition={{ type: "spring", bounce: 0.19, duration: 0.4 }}
               />
             )}

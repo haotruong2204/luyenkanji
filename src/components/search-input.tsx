@@ -104,7 +104,7 @@ const VirtualizedCommand = ({
             data={flattenedOptions}
             itemContent={(index, data) =>
               data.type === "group" ? (
-                <div className="z-10 p-1 pl-2 text-sm text-foreground/50">
+                <div className="text-foreground/50 z-10 p-1 pl-2 text-sm">
                   {data.value}
                 </div>
               ) : (
@@ -162,7 +162,7 @@ export const SearchInput = ({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="p-0 w-(--radix-popover-trigger-width)">
+      <PopoverContent className="w-(--radix-popover-trigger-width) p-0">
         <VirtualizedCommand
           height={popoverHeight}
           options={OPTIONS}
@@ -175,7 +175,9 @@ export const SearchInput = ({
             if (currentValue.kanji in composition) {
               router.push(`/${currentValue.kanji}`);
             } else {
-              console.warn(`Kanji "${currentValue.kanji}" not found in composition`);
+              console.warn(
+                `Kanji "${currentValue.kanji}" not found in composition`
+              );
             }
           }}
         />

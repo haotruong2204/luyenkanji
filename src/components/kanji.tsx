@@ -14,10 +14,9 @@ interface Props {
 
 export const Kanji = ({ kanji, kanjiInfo, graphData, screen }: Props) => {
   return (
-    <div className="min-h-[330px] relative size-full overflow-hidden flex flex-col md:grid md:grid-cols-[30%_70%]">
+    <div className="relative flex size-full min-h-[330px] flex-col overflow-hidden md:grid md:grid-cols-[30%_70%]">
       {/* Animation Section */}
-      <div className="flex w-full justify-center items-center p-4 md:p-12" 
-      >
+      <div className="flex w-full items-center justify-center p-4 md:p-12">
         <div className={screen === "mobile" ? "w-full max-w-[320px]" : ""}>
           <KanjiStrokeAnimationDynamic
             key={kanji}
@@ -30,13 +29,14 @@ export const Kanji = ({ kanji, kanjiInfo, graphData, screen }: Props) => {
       </div>
 
       {/* Info Section */}
-      <div className="flex flex-col p-4 space-y-2">
-        <h1 className="text-4xl leading-tight sm:text-4xl" 
-            style={{
-              fontFamily: '"Zen Maru Gothic", sans-serif',
-              fontWeight: 400,
-              fontStyle: "normal"
-            }}
+      <div className="flex flex-col space-y-2 p-4">
+        <h1
+          className="text-4xl leading-tight sm:text-4xl"
+          style={{
+            fontFamily: '"Zen Maru Gothic", sans-serif',
+            fontWeight: 400,
+            fontStyle: "normal",
+          }}
         >
           {kanjiInfo?.id} - {kanjiInfo?.hanzi}
         </h1>
@@ -54,7 +54,8 @@ export const Kanji = ({ kanji, kanjiInfo, graphData, screen }: Props) => {
 
           {kanjiInfo?.jishoData?.newspaperFrequencyRank && (
             <p>
-              <strong>{kanjiInfo?.jishoData?.newspaperFrequencyRank}</strong> trong 2500 kanji thông dụng nhất
+              <strong>{kanjiInfo?.jishoData?.newspaperFrequencyRank}</strong>{" "}
+              trong 2500 kanji thông dụng nhất
             </p>
           )}
 
@@ -95,12 +96,9 @@ export const Kanji = ({ kanji, kanjiInfo, graphData, screen }: Props) => {
                 ))}
             </p>
           )}
-          {kanjiInfo?.story && (
-            <p>Gợi ý cách nhớ: {kanjiInfo.story}</p>
-          )} 
+          {kanjiInfo?.story && <p>Gợi ý cách nhớ: {kanjiInfo.story}</p>}
         </div>
       </div>
     </div>
-
   );
 };

@@ -20,16 +20,16 @@ export const Header = ({
   return (
     <div
       className={cn(
-        "flex items-center justify-between h-12 border-b",
+        "flex h-12 items-center justify-between border-b",
         className
       )}
     >
-      <div className="flex items-center h-ful">
+      <div className="h-ful flex items-center">
         <Link href={`/`} className="flex h-full items-center p-4">
-          <LogoSVG className="h-full py-2 px-4 w-14 inline-block" />
+          <LogoSVG className="inline-block h-full w-14 px-4 py-2" />
         </Link>
       </div>
-      <div className="flex px-4 gap-2">
+      <div className="flex gap-2 px-4">
         <Tooltip>
           <TooltipTrigger asChild>
             <Link

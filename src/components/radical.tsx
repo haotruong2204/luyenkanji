@@ -101,11 +101,11 @@ export const Radical: React.FC<Props> = ({ kanjiInfo }) => {
   }, [baseRadicalChar, radicalMap, altToBaseMap, toPositionName]);
 
   return (
-    <div className="min-h-[330px] relative w-full h-full overflow-hidden grid grid-rows-[36px_100px_1fr] grid-cols-[120px_1fr]">
+    <div className="relative grid h-full min-h-[330px] w-full grid-cols-[120px_1fr] grid-rows-[36px_100px_1fr] overflow-hidden">
       <div>
         <h3 className="text-lg font-extrabold">Radical</h3>
       </div>
-      <div className="pt-2 w-full h-full overflow-hidden text-sm leading-6 row-span-3">
+      <div className="row-span-3 h-full w-full overflow-hidden pt-2 text-sm leading-6">
         {kanjiInfo?.jishoData?.radical?.symbol && (
           <p>
             Radical: <strong>{kanjiInfo?.jishoData?.radical?.symbol}</strong>
@@ -144,11 +144,11 @@ export const Radical: React.FC<Props> = ({ kanjiInfo }) => {
         {alternatives.length > 0 && (
           <div className="mt-2">
             <p className="">Alternative forms:</p>
-            <div className="flex flex-wrap gap-3 mt-1">
+            <div className="mt-1 flex flex-wrap gap-3">
               {alternatives.map((alt) => (
                 <span
                   key={`${alt.char}-${alt.posName || "none"}`}
-                  className="inline-flex items-center gap-2 border rounded px-2 py-0.5"
+                  className="inline-flex items-center gap-2 rounded border px-2 py-0.5"
                 >
                   <span className="text-base">{alt.char}</span>
                   {alt.posName && (
@@ -168,14 +168,14 @@ export const Radical: React.FC<Props> = ({ kanjiInfo }) => {
           </div>
         )}
       </div>
-      <div className="flex flex-col items-center justify-center w-full h-full overflow-hidden">
+      <div className="flex h-full w-full flex-col items-center justify-center overflow-hidden">
         {baseRadicalChar && (
           <h1 className="text-6xl leading-tight sm:text-5xl">
             {baseRadicalChar}
           </h1>
         )}
       </div>
-      <div className="place-self-center w-20 h-20 relative overflow-hidden">
+      <div className="relative h-20 w-20 place-self-center overflow-hidden">
         {kanjiInfo?.kanjialiveData?.radical?.animation && (
           <RadicalImages
             radicalImageArray={kanjiInfo?.kanjialiveData?.radical?.animation}

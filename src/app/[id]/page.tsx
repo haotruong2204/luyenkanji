@@ -34,17 +34,17 @@ export default async function KanjiPage({
 }) {
   const { id: urlEncodedId } = await params;
   const id = decodeURIComponent(urlEncodedId);
-  
+
   // Check if Kanji exists in composition
   if (!(id in composition)) {
     notFound();
   }
-  
+
   const kanjiInfo = await getKanjiDataLocal(id);
   const graphData = await getGraphData(id);
 
   return (
-    <div className="size-full ">
+    <div className="size-full">
       <Header className="w-full" />
       {kanjiInfo && (
         <KanjiPageContent

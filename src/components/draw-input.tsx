@@ -20,7 +20,7 @@ export const DrawInput: React.FC<DrawInputProps> = ({
   className = "",
   height = 220,
   width = 220,
-  fullWidth = false
+  fullWidth = false,
 }) => {
   const canvasRef = React.useRef(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -53,8 +53,8 @@ export const DrawInput: React.FC<DrawInputProps> = ({
     };
 
     updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-    return () => window.removeEventListener('resize', updateDimensions);
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
   }, [fullWidth, height]);
 
   const inputOptions = {
@@ -99,7 +99,7 @@ export const DrawInput: React.FC<DrawInputProps> = ({
       if (recognizeTimeoutRef.current) {
         clearTimeout(recognizeTimeoutRef.current);
       }
-      
+
       // Recognize after a short delay (300ms after user stops drawing)
       recognizeTimeoutRef.current = setTimeout(() => {
         const trace = canvas.getTrace();
@@ -136,23 +136,31 @@ export const DrawInput: React.FC<DrawInputProps> = ({
   };
 
   return (
-    <div 
+    <div
       ref={containerRef}
-      className={cn("relative bg-background", fullWidth ? "w-full" : "mx-auto", className)} 
-      style={fullWidth ? { height: dimensions.height } : { width: width, height: height }}
+      className={cn(
+        "bg-background relative",
+        fullWidth ? "w-full" : "mx-auto",
+        className
+      )}
+      style={
+        fullWidth
+          ? { height: dimensions.height }
+          : { width: width, height: height }
+      }
     >
-      <div 
-        className="absolute border-l border-dashed border-slate-600/20 dark:border-slate-600/60 pointer-events-none z-10" 
-        style={{ 
-          left: fullWidth ? `${dimensions.width / 2}px` : '50%',
-          height: fullWidth ? `${dimensions.height}px` : '100%'
+      <div
+        className="pointer-events-none absolute z-10 border-l border-dashed border-slate-600/20 dark:border-slate-600/60"
+        style={{
+          left: fullWidth ? `${dimensions.width / 2}px` : "50%",
+          height: fullWidth ? `${dimensions.height}px` : "100%",
         }}
       />
-      <div 
-        className="absolute border-t border-dashed border-slate-600/20 dark:border-slate-600/60 pointer-events-none z-10" 
-        style={{ 
-          top: fullWidth ? `${dimensions.height / 2}px` : '50%',
-          width: fullWidth ? `${dimensions.width}px` : '100%'
+      <div
+        className="pointer-events-none absolute z-10 border-t border-dashed border-slate-600/20 dark:border-slate-600/60"
+        style={{
+          top: fullWidth ? `${dimensions.height / 2}px` : "50%",
+          width: fullWidth ? `${dimensions.width}px` : "100%",
         }}
       />
       <TouchIsolator>
@@ -161,25 +169,29 @@ export const DrawInput: React.FC<DrawInputProps> = ({
           height={fullWidth ? dimensions.height : height}
           ref={canvasRef}
           id="handInput"
-          className="relative border border-light rounded-lg cursor-crosshair bg-muted w-full"
-          style={fullWidth ? { height: dimensions.height } : { width: width, height: height }}
+          className="border-light bg-muted relative w-full cursor-crosshair rounded-lg border"
+          style={
+            fullWidth
+              ? { height: dimensions.height }
+              : { width: width, height: height }
+          }
         />
       </TouchIsolator>
-      <div className="h-10 w-full pt-2 flex items-center justify-start gap-2">
+      <div className="flex h-10 w-full items-center justify-start gap-2 pt-2">
         <Button
           aria-label="Clear canvas"
           variant="destructive"
           size="icon"
-          className="w-8 h-8 shrink-0"
+          className="h-8 w-8 shrink-0"
           onClick={eraseKanji}
         >
-          <CircleXIcon className="w-4 h-4" />
+          <CircleXIcon className="h-4 w-4" />
         </Button>
         {inputSuggestions.map((suggestion, index) => (
           <Link
             key={index}
             href={`/${suggestion}`}
-            className={cn(buttonVariants({ variant: "ghost" }), "w-8 h-8")}
+            className={cn(buttonVariants({ variant: "ghost" }), "h-8 w-8")}
             onClick={eraseKanji}
           >
             {suggestion}

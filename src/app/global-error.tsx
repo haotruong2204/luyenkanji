@@ -17,7 +17,7 @@ const notoSansJp = Noto_Sans_JP({
 export default function GlobalError({ reset }: { reset: () => void }) {
   return (
     <html lang="en" suppressHydrationWarning className={notoSansJp.className}>
-      <body className="w-screen h-screen overflow-hidden bg-background text-foreground selection:bg-primary">
+      <body className="bg-background text-foreground selection:bg-primary h-screen w-screen overflow-hidden">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -25,8 +25,8 @@ export default function GlobalError({ reset }: { reset: () => void }) {
           disableTransitionOnChange
         >
           <Header className="w-full" />
-          <div className="size-full grid place-items-center gap-4">
-            <h1 className="font-bold text-xl">Something went wrong!</h1>
+          <div className="grid size-full place-items-center gap-4">
+            <h1 className="text-xl font-bold">Something went wrong!</h1>
             <Button onClick={() => reset()}>Try again</Button>
           </div>
         </ThemeProvider>
