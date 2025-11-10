@@ -37,3 +37,6 @@ keys*
 *.tsbuildinfo
 
 .env
+
+# Use yarn.lock only
+package-lock.json
