@@ -16,7 +16,7 @@ interface DrawInputProps {
   fullWidth?: boolean;
 }
 
-export const DrawInput: React.FC<DrawInputProps> = ({ 
+export const DrawInput: React.FC<DrawInputProps> = ({
   className = "",
   height = 220,
   width = 220,
@@ -30,8 +30,14 @@ export const DrawInput: React.FC<DrawInputProps> = ({
   const [inputSuggestions, setInputSuggestions] = React.useState<string[]>([]);
   const recognizeTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
   const [dimensions, setDimensions] = React.useState({ width, height });
+  const [isMounted, setIsMounted] = React.useState(false);
 
   const { resolvedTheme } = useTheme();
+
+  // Ensure client-side only
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Handle responsive sizing when fullWidth is true
   React.useEffect(() => {
@@ -73,16 +79,16 @@ export const DrawInput: React.FC<DrawInputProps> = ({
 
   // init
   React.useEffect(() => {
+    if (!isMounted) return;
     eraseKanji();
     if (canvasRef.current && resolvedTheme) {
       const can = new Handwriting.Canvas(
         canvasRef.current,
-        // document.getElementById("handInput"),
         resolvedTheme as "dark" | "light"
       );
       setCanvas(can);
     }
-  }, [resolvedTheme]);
+  }, [resolvedTheme, isMounted]);
 
   // Auto-recognize after drawing stops
   React.useEffect(() => {
