@@ -16,13 +16,16 @@ import { Metadata } from "next";
 import { Sidebar } from "@/components/sidebar/sidebar";
 
 export const metadata: Metadata = {
-  title: { default: "The Kanji Map", template: "%s | The Kanji Map" },
+  title: {
+    default: "Trang chủ",
+    template: "%s | Nhaitungvung.com by @thocodehoctiengnhat",
+  },
   description:
-    "The Kanji Map is a Japanese language learning tool that shows kanji information and decomposition in graph form.",
+    "Nhaitungvung.com by @thocodehoctiengnhat là một công cụ học tiếng Nhật hiển thị thông tin chữ Kanji và cách phân tích dưới dạng biểu đồ.",
   openGraph: {
-    title: "The Kanji Map",
+    title: "Nhaitungvung.com by @thocodehoctiengnhat",
     description:
-      "The Kanji Map is a Japanese language learning tool that shows kanji information and decomposition in graph form.",
+      "Nhaitungvung.com by @thocodehoctiengnhat là một công cụ học tiếng Nhật hiển thị thông tin chữ Kanji và cách phân tích dưới dạng biểu đồ.",
   },
   icons: {
     icon: "/favicon.svg",

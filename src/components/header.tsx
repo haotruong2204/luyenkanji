@@ -1,9 +1,7 @@
-import { InfoIcon } from "lucide-react";
-import Link from "next/link";
-import LogoSVG from "./logo";
-import { buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { ThemeSwitcherButton } from "./theme-switcher";
+import LogoSVG from "./logo";
+import Link from "next/link";
 import {
   Tooltip,
   TooltipContent,
@@ -13,45 +11,34 @@ import {
 export const Header = ({
   route,
   className,
+  showLogo = false,
 }: {
   route?: string;
   className?: string;
+  showLogo?: boolean;
 }) => {
   return (
     <div
       className={cn(
-        "flex h-12 items-center justify-between border-b",
+        "flex h-12 items-center border-b",
+        showLogo ? "justify-between" : "justify-end",
         className
       )}
     >
-      <div className="h-ful flex items-center">
-        <Link href={`/`} className="flex h-full items-center p-4">
-          <LogoSVG className="inline-block h-full w-14 px-4 py-2" />
-        </Link>
-      </div>
+      {showLogo && (
+        <div className="flex h-12 items-center px-4">
+          <Link href="/">
+            <LogoSVG className="inline-block h-full w-14 px-4 py-2" />
+          </Link>
+        </div>
+      )}
       <div className="flex gap-2 px-4">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Link
-              href={route === "about" ? "/ " : "about"}
-              className={cn(
-                buttonVariants({ variant: "ghost", size: "icon" }),
-                route === "about" ? "bg-accent! text-accent-foreground!" : ""
-              )}
-            >
-              <InfoIcon className={cn("size-5")} />
-            </Link>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>About this website</p>
-          </TooltipContent>
-        </Tooltip>
         <Tooltip>
           <TooltipTrigger asChild>
             <ThemeSwitcherButton />
           </TooltipTrigger>
           <TooltipContent>
-            <p>Change theme</p>
+            <p>Thay đổi giao diện</p>
           </TooltipContent>
         </Tooltip>
       </div>

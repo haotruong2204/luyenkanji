@@ -42,8 +42,10 @@ export const Kanji = ({ kanji, kanjiInfo, graphData, screen }: Props) => {
         </h1>
 
         <div className="text-sm leading-6">
-          {kanjiInfo && jinmeiyoList?.includes(kanjiInfo.id) && (
-            <p>Jinmeiyō kanji, used in names</p>
+          {kanjiInfo?.jishoData?.meaning && (
+            <p>
+              Ý nghĩa: <strong>{kanjiInfo?.jishoData?.meaning}</strong>
+            </p>
           )}
 
           {kanjiInfo?.jishoData?.jlptLevel && (
@@ -62,12 +64,6 @@ export const Kanji = ({ kanji, kanjiInfo, graphData, screen }: Props) => {
           {kanjiInfo?.jishoData?.strokeCount && (
             <p>
               Số nét: <strong>{kanjiInfo?.jishoData?.strokeCount}</strong>
-            </p>
-          )}
-
-          {kanjiInfo?.jishoData?.meaning && (
-            <p>
-              Ý nghĩa: <strong>{kanjiInfo?.jishoData?.meaning}</strong>
             </p>
           )}
 

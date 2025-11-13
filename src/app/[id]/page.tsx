@@ -45,7 +45,7 @@ export default async function KanjiPage({
 
   return (
     <div className="size-full">
-      <Header className="w-full" />
+      <Header className="w-full" showLogo />
       {kanjiInfo && (
         <KanjiPageContent
           kanji={id}
