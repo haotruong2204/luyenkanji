@@ -8,7 +8,7 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Hero Banner */}
       <section className="relative overflow-hidden bg-gradient-to-r from-orange-500 to-red-500 px-8 py-16">
-        <div className="mx-auto max-w-6xl">
+        <div className="max-w-6xl">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             {/* Left - Content */}
             <div className="space-y-6 text-white">
@@ -69,7 +69,7 @@ export default function Home() {
       </section>
 
       {/* Main Content */}
-      <div className="mx-auto max-w-6xl px-8 py-12">
+      <div className="max-w-6xl px-8 py-12">
         {/* Search & Draw Section */}
         <div className="mb-12 grid gap-6 md:grid-cols-2">
           {/* Search Card */}
@@ -171,7 +171,7 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="rounded-2xl bg-gradient-to-r from-orange-500 to-red-500 p-12 text-center text-white">
+        <section className="rounded-2xl bg-gradient-to-r from-orange-500 to-red-500 p-12 text-white">
           <h2 className="mb-4 text-3xl font-bold md:text-4xl">
             Sẵn sàng chinh phục Kanji?
           </h2>
@@ -187,7 +187,7 @@ export default function Home() {
         </section>
 
         {/* Footer */}
-        <footer className="mt-12 border-t pt-8 text-center text-sm text-gray-600 dark:text-gray-400">
+        <footer className="mt-12 border-t pt-8 text-sm text-gray-600 dark:text-gray-400">
           <p>
             © {new Date().getFullYear()} The Kanji Map · by{" "}
             <a
