@@ -2,7 +2,7 @@ import { DrawInput } from "@/components/draw-input";
 import { Header } from "@/components/header";
 import { SearchInput } from "@/components/search-input";
 import { Sidebar } from "@/components/sidebar";
-import Image from "next/image";
+import NextImage from "next/image";
 
 export default function Home() {
   return (
@@ -129,7 +129,7 @@ export default function Home() {
                 </div>
                 {/* Image - replace /banner.png with your actual image path */}
                 <div className="absolute top-0 right-0 h-full w-1/2 overflow-hidden">
-                  <Image
+                  <NextImage
                     src="/logo.png"
                     alt="Kanji learning"
                     width={400}
