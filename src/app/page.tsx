@@ -127,11 +127,15 @@ export default function Home() {
                     phí
                   </p>
                 </div>
-                {/* Placeholder for image */}
-                <div className="absolute top-0 right-0 h-full w-1/3 opacity-20">
-                  <div className="flex h-full items-center justify-center text-8xl">
-                    🗾
-                  </div>
+                {/* Image - replace /banner.png with your actual image path */}
+                <div className="absolute top-0 right-0 h-full w-1/2 overflow-hidden">
+                  <Image
+                    src="/logo.png"
+                    alt="Kanji learning"
+                    width={400}
+                    height={400}
+                    className="h-full w-full object-contain opacity-20"
+                  />
                 </div>
               </div>
             </div>
