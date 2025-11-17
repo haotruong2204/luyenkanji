@@ -2,6 +2,7 @@ import { DrawInput } from "@/components/draw-input";
 import { Header } from "@/components/header";
 import { SearchInput } from "@/components/search-input";
 import { Sidebar } from "@/components/sidebar";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -111,6 +112,27 @@ export default function Home() {
               <div className="bg-card rounded-lg border p-4">
                 <div className="text-primary text-2xl font-bold">Nhai</div>
                 <div className="text-muted-foreground">Từ vựng JLPT</div>
+              </div>
+            </div>
+
+            {/* Banner */}
+            <div className="mt-8 w-full max-w-4xl">
+              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 to-red-500 p-8">
+                <div className="relative z-10 space-y-4 text-white">
+                  <h2 className="text-3xl font-bold">
+                    Bắt đầu học Kanji hiệu quả ngay hôm nay
+                  </h2>
+                  <p className="text-lg text-white/90">
+                    Hệ thống học thông minh với sơ đồ trực quan, hoàn toàn miễn
+                    phí
+                  </p>
+                </div>
+                {/* Placeholder for image */}
+                <div className="absolute top-0 right-0 h-full w-1/3 opacity-20">
+                  <div className="flex h-full items-center justify-center text-8xl">
+                    🗾
+                  </div>
+                </div>
               </div>
             </div>
           </div>
