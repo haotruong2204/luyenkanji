@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Info, Menu, X } from "lucide-react";
+import { Home, Info, Menu, X, Facebook } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
@@ -18,8 +18,13 @@ const menuItems = [
   },
   {
     href: "/about",
-    label: "Lộ trình",
+    label: "Thông tin",
     icon: Info,
+  },
+  {
+    href: "https://web.facebook.com/groups/thocodehoctiengnhat",
+    label: "Cộng đồng",
+    icon: Facebook,
   },
 ];
 
@@ -125,7 +130,10 @@ export function Sidebar() {
                   }
                 >
                   <Icon className="size-5" />
-                  <span className="text-center leading-tight">
+                  <span
+                    className="text-center leading-tight"
+                    style={{ fontSize: "9px" }}
+                  >
                     {item.label}
                   </span>
                 </Link>

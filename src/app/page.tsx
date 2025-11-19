@@ -2,6 +2,7 @@ import { DrawInput } from "@/components/draw-input";
 import { Header } from "@/components/header";
 import { SearchInput } from "@/components/search-input";
 import { Sidebar } from "@/components/sidebar";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -56,12 +57,9 @@ export default function Home() {
         </div>
 
         {/* DESKTOP */}
-        <div className="hidden w-full grow flex-col items-center justify-center gap-8 p-8 md:flex">
-          <div className="w-full max-w-2xl space-y-8 text-center">
+        <div className="hidden w-full grow flex-col gap-8 p-8 md:flex">
+          <div className="w-full max-w-2xl space-y-8">
             <div className="space-y-4">
-              <h1 className="text-5xl font-bold tracking-tight">
-                "Nhai" kanji
-              </h1>
               <p
                 className="text-muted-foreground"
                 style={{
@@ -83,10 +81,13 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="mx-auto w-full max-w-4xl space-y-6 pt-4">
+            <div className="w-full max-w-4xl space-y-6 pt-4">
               <div className="space-y-2">
                 <h2 className="text-lg font-semibold">Tìm kiếm Kanji</h2>
-                <SearchInput searchPlaceholder="Nhập kanji hoặc nghĩa..." />
+                <SearchInput
+                  fullWidth
+                  searchPlaceholder="Nhập kanji hoặc nghĩa..."
+                />
               </div>
 
               <div className="space-y-2">
@@ -114,7 +115,28 @@ export default function Home() {
               </div>
             </div>
           </div>
+
+          {/* banner */}
+          <div className="absolute top-0 right-0 h-full w-2/5">
+            <Image
+              src="/banner.png"
+              alt="Kanji learning"
+              width={600}
+              height={700}
+            />
+          </div>
         </div>
+        <footer className="bg-card/50 mt-auto w-full">
+          <div
+            className="h-10 w-full"
+            style={{
+              backgroundImage: "url(/ft.jpg)",
+              backgroundRepeat: "repeat-x",
+              backgroundSize: "80px auto",
+              backgroundPosition: "center",
+            }}
+          />
+        </footer>
       </div>
     </>
   );
