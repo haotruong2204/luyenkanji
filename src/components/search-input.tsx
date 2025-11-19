@@ -26,6 +26,7 @@ const OPTIONS: SearchOption[] = searchlist.map((el) => {
     kanji: el.k,
     kunyomi: el.r,
     meaning: el.m,
+    yinhan: el.h,
     group: el.g === 1 ? "joyo" : el.g === 2 ? "jinmeiyo" : "other",
   };
 });
@@ -34,6 +35,7 @@ type SearchOption = {
   kanji: string;
   kunyomi: string;
   meaning: string;
+  yinhan?: string;
   group: "joyo" | "jinmeiyo" | "other";
 };
 
@@ -43,6 +45,7 @@ interface VirtualizedCommandProps {
   placeholder: string;
   selectedOption: SearchOption | null;
   onSelectOption?: (option: SearchOption) => void;
+  width?: string;
 }
 
 const VirtualizedCommand = ({
@@ -51,6 +54,7 @@ const VirtualizedCommand = ({
   placeholder,
   selectedOption,
   onSelectOption,
+  width,
 }: VirtualizedCommandProps) => {
   const [filteredOptions, setFilteredOptions] =
     React.useState<SearchOption[]>(options);
@@ -61,7 +65,9 @@ const VirtualizedCommand = ({
         (option) =>
           option.kanji.toLowerCase().includes(search.toLowerCase()) ||
           option.kunyomi.toLowerCase().includes(search.toLowerCase()) ||
-          option.meaning.toLowerCase().includes(search.toLowerCase())
+          option.meaning.toLowerCase().includes(search.toLowerCase()) ||
+          (option.yinhan &&
+            option.yinhan.toLowerCase().includes(search.toLowerCase()))
       )
     );
   };
@@ -94,9 +100,9 @@ const VirtualizedCommand = ({
   }, [filteredOptions]);
 
   return (
-    <Command shouldFilter={false}>
+    <Command shouldFilter={false} style={width ? { width } : undefined}>
       <CommandInput onValueChange={handleSearch} placeholder={placeholder} />
-      <CommandList style={{ height, overflow: "auto" }}>
+      <CommandList style={{ height, width, overflow: "auto" }}>
         {flattenedOptions.length === 0 ? (
           <CommandEmpty>Không có kết quả nào.</CommandEmpty>
         ) : (
@@ -118,6 +124,11 @@ const VirtualizedCommand = ({
 
                     <div className="text-xs">
                       <div>{data.value.kunyomi}</div>
+                      {data.value.yinhan && (
+                        <div className="text-primary font-semibold">
+                          {data.value.yinhan}
+                        </div>
+                      )}
                       <div>{data.value.meaning}</div>
                     </div>
                   </div>
@@ -136,12 +147,16 @@ interface SearchInputProps {
   searchPlaceholder?: string;
   className?: string;
   popoverHeight?: string; // Height of dropdown, default "215px"
+  popoverWidth?: string; // Width of dropdown
+  fullWidth?: boolean; // Use full width of trigger button
 }
 
 export const SearchInput = ({
   searchPlaceholder = "Search kanji...",
   className = "",
   popoverHeight = "215px",
+  popoverWidth = "220px",
+  fullWidth = false,
 }: SearchInputProps) => {
   const router = useRouter();
 
@@ -162,9 +177,19 @@ export const SearchInput = ({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-(--radix-popover-trigger-width) p-0">
+      <PopoverContent
+        className="p-0"
+        style={{
+          width: fullWidth
+            ? "var(--radix-popover-trigger-width)"
+            : popoverWidth,
+        }}
+      >
         <VirtualizedCommand
           height={popoverHeight}
+          width={
+            fullWidth ? "var(--radix-popover-trigger-width)" : popoverWidth
+          }
           options={OPTIONS}
           placeholder={searchPlaceholder}
           selectedOption={selectedOption}
