@@ -26,6 +26,7 @@ const OPTIONS: SearchOption[] = searchlist.map((el) => {
     kanji: el.k,
     kunyomi: el.r,
     meaning: el.m,
+    yinhan: el.h,
     group: el.g === 1 ? "joyo" : el.g === 2 ? "jinmeiyo" : "other",
   };
 });
@@ -34,6 +35,7 @@ type SearchOption = {
   kanji: string;
   kunyomi: string;
   meaning: string;
+  yinhan?: string;
   group: "joyo" | "jinmeiyo" | "other";
 };
 
@@ -63,7 +65,9 @@ const VirtualizedCommand = ({
         (option) =>
           option.kanji.toLowerCase().includes(search.toLowerCase()) ||
           option.kunyomi.toLowerCase().includes(search.toLowerCase()) ||
-          option.meaning.toLowerCase().includes(search.toLowerCase())
+          option.meaning.toLowerCase().includes(search.toLowerCase()) ||
+          (option.yinhan &&
+            option.yinhan.toLowerCase().includes(search.toLowerCase()))
       )
     );
   };
@@ -120,6 +124,11 @@ const VirtualizedCommand = ({
 
                     <div className="text-xs">
                       <div>{data.value.kunyomi}</div>
+                      {data.value.yinhan && (
+                        <div className="text-primary font-semibold">
+                          {data.value.yinhan}
+                        </div>
+                      )}
                       <div>{data.value.meaning}</div>
                     </div>
                   </div>
@@ -146,7 +155,7 @@ export const SearchInput = ({
   searchPlaceholder = "Search kanji...",
   className = "",
   popoverHeight = "215px",
-  popoverWidth = "400px",
+  popoverWidth = "220px",
   fullWidth = false,
 }: SearchInputProps) => {
   const router = useRouter();
@@ -171,12 +180,16 @@ export const SearchInput = ({
       <PopoverContent
         className="p-0"
         style={{
-          width: fullWidth ? "var(--radix-popover-trigger-width)" : popoverWidth,
+          width: fullWidth
+            ? "var(--radix-popover-trigger-width)"
+            : popoverWidth,
         }}
       >
         <VirtualizedCommand
           height={popoverHeight}
-          width={fullWidth ? "var(--radix-popover-trigger-width)" : popoverWidth}
+          width={
+            fullWidth ? "var(--radix-popover-trigger-width)" : popoverWidth
+          }
           options={OPTIONS}
           placeholder={searchPlaceholder}
           selectedOption={selectedOption}
