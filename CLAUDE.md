@@ -63,6 +63,7 @@ data/
 ```
 
 **Preprocessing scripts** (in `/preprocess` directory):
+
 1. `1_create_composition.ts` - Creates composition graph from KanjiVG data
 2. `2_create_searchlist.ts` - Generates searchable kanji list
 3. `3_create_data.ts` - Fetches kanji data from Jisho.org and KanjiAlive APIs
@@ -81,12 +82,14 @@ data/
 ### State Management
 
 **Jotai** is the primary state management solution:
+
 - `src/lib/store.tsx` defines atoms using `atomWithStorage` for persistent graph preferences
 - Nested state structure: `graphPreferenceAtom` contains `style`, `rotate`, `outLinks`, `particles`
 - Derived atoms (`styleAtom`, `rotateAtom`, etc.) provide granular access to nested properties
 - Persists to localStorage automatically
 
 **Providers hierarchy** (in `src/app/layout.tsx`):
+
 ```
 ThemeProvider (next-themes)
 └── TooltipProvider (Radix UI)
@@ -97,15 +100,18 @@ ThemeProvider (next-themes)
 ### Component Architecture
 
 **Search & Input:**
+
 - `search-input.tsx` - Virtual scrolling dropdown (react-virtuoso) for 2500+ kanji search
 - `draw-input.tsx` - Canvas-based handwriting recognition using handwriting.js
 
 **Kanji Display:**
+
 - `kanji.tsx` - Main kanji info component
 - `kanji-stroke-animation.tsx` / `kanji-stroke-animation-dynamic.tsx` - Stroke order visualization using kanjivganimate
 - `radical.tsx` + `radical-images.tsx` - Radical information and animations
 
 **Graphs:**
+
 - `graphs.tsx` - Wrapper with controls for 2D/3D toggle and preferences
 - `graph-2D.tsx` - Force-directed graph using react-force-graph-2d
 - `graph-3D.tsx` - 3D force-directed graph using react-force-graph-3d + three-spritetext
@@ -114,6 +120,7 @@ ThemeProvider (next-themes)
   - **Outbound links**: Kanji that use the current kanji as a component
 
 **UI Components:**
+
 - Located in `src/components/ui/` - Shadcn-style components built on Radix UI primitives
 - Use `class-variance-authority` (CVA) for variant management
 - Styled with Tailwind CSS 4.0
@@ -121,12 +128,14 @@ ThemeProvider (next-themes)
 ### Fonts & Theming
 
 **Font loading** (Next.js font optimization):
+
 - Noto Sans JP (variable weight) - Primary Japanese font
 - Multiple decorative fonts (Caveat, Comfortaa, Itim, Kablammo, VT323, Zen Maru Gothic)
 - Local font: JapaneseRadicals-Regular.woff2 for radical display
 - All fonts use `display: "swap"` for performance
 
 **Theme system:**
+
 - `next-themes` for dark/light mode with system detection
 - CSS custom properties in `src/styles/globals.css`
 - `suppressHydrationWarning` used extensively to prevent theme mismatches
@@ -134,6 +143,7 @@ ThemeProvider (next-themes)
 ### Path Aliases
 
 TypeScript path alias configured in `tsconfig.json`:
+
 ```
 "@/*" maps to "./src/*"
 ```
@@ -143,22 +153,27 @@ Example: `import { getKanjiDataLocal } from "@/lib"`
 ## Key Technical Details
 
 ### Static Site Generation (SSG)
+
 - All 2500+ kanji pages are pre-rendered at build time
 - Pages are accessible via dynamic routes: `/[kanji]` (e.g., `/漢`)
 - URL encoding/decoding handled for Unicode kanji characters
 
 ### Graph Composition Algorithm
+
 See `src/lib/index.ts`:
+
 - `findNodes()` - Recursively traverses composition graph to find all connected components
 - `createInLinks()` - Generates links between kanji and their constituent parts
 - Returns two graph datasets: `withOutLinks` and `noOutLinks`
 
 ### Stroke Animation Data Loading
+
 - Multiple SVG directories checked in order of preference: `svgsJa` → `svgsJaSpecial` → `svgsZhHans` → etc.
 - Fallback mechanism: if Japanese stroke data unavailable, uses Chinese/Korean variants
 - SVG files named by Unicode codepoint: `{charCodeAt(0)}.svg`
 
 ### Performance Optimizations
+
 - Virtual scrolling in search dropdown (handles 2500+ items smoothly)
 - Dynamic imports for heavy 2D/3D graph components
 - Pre-generated data files to avoid API calls during builds
@@ -167,6 +182,7 @@ See `src/lib/index.ts`:
 ## Data Sources & Licensing
 
 All data aggregated from open-source/CC-licensed sources:
+
 - KanjiVG (CC-BY-SA 3.0) - Stroke data
 - Jisho.org (CC 4.0) - Kanji info, meanings, audio
 - KanjiAlive (CC 4.0) - Detailed kanji information
