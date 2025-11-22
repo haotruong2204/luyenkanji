@@ -1,16 +1,15 @@
-# Rails Implementation Guide - Luyenkanji API
+# Rails Implementation Guide - Luyenkanji API (MySQL)
 
-Hướng dẫn chi tiết để xây dựng backend API cho Luyenkanji bằng Ruby on Rails.
+Hướng dẫn chi tiết để xây dựng backend API cho Luyenkanji bằng Ruby on Rails với MySQL.
 
 ## 📋 Tech Stack
 
 - **Ruby on Rails** >= 7.1
-- **PostgreSQL** >= 14
+- **MySQL** >= 8.0
 - **Ruby** >= 3.2
 - **Gems chính:**
   - `devise` hoặc `jwt` - Authentication
-  - `pg` - PostgreSQL adapter
-  - `pg_search` - Full-text search
+  - `mysql2` - MySQL adapter
   - `rack-cors` - CORS support
   - `active_model_serializers` hoặc `jsonapi-serializer` - JSON serialization
   - `kaminari` hoặc `pagy` - Pagination
@@ -20,17 +19,27 @@ Hướng dẫn chi tiết để xây dựng backend API cho Luyenkanji bằng Ru
 ## 🚀 Setup Project
 
 ```bash
-# Tạo Rails API app mới
-rails new luyenkanji_api --api --database=postgresql
+# Tạo Rails API app mới với MySQL
+rails new luyenkanji_api --api --database=mysql
 
 cd luyenkanji_api
 
 # Thêm gems vào Gemfile
 bundle add devise-jwt
-bundle add pg_search
 bundle add rack-cors
 bundle add jsonapi-serializer
 bundle add kaminari
+
+# Cấu hình database.yml
+# config/database.yml
+# development:
+#   adapter: mysql2
+#   encoding: utf8mb4
+#   pool: 5
+#   username: root
+#   password: your_password
+#   host: localhost
+#   database: luyenkanji_api_development
 
 # Setup database
 rails db:create
@@ -51,17 +60,17 @@ rails generate migration CreateKanjis
 class CreateKanjis < ActiveRecord::Migration[7.1]
   def change
     create_table :kanjis do |t|
-      t.string :character, limit: 1, null: false, index: { unique: true }
+      t.string :character, limit: 1, null: false
 
       # Basic info
       t.text :meaning_en, null: false
       t.text :meaning_vi
 
-      # Readings (use array type)
-      t.text :onyomi, array: true, default: []
-      t.text :onyomi_romaji, array: true, default: []
-      t.text :kunyomi, array: true, default: []
-      t.text :kunyomi_romaji, array: true, default: []
+      # Readings (JSON columns for MySQL)
+      t.json :onyomi
+      t.json :onyomi_romaji
+      t.json :kunyomi
+      t.json :kunyomi_romaji
 
       # Classification
       t.integer :grade
@@ -75,7 +84,7 @@ class CreateKanjis < ActiveRecord::Migration[7.1]
       # Stroke info
       t.integer :stroke_count
       t.text :stroke_order_svg
-      t.decimal :stroke_timings, array: true, default: []
+      t.json :stroke_timings
 
       # URLs
       t.text :stroke_diagram_url
@@ -85,6 +94,7 @@ class CreateKanjis < ActiveRecord::Migration[7.1]
     end
 
     # Indexes
+    add_index :kanjis, :character, unique: true
     add_index :kanjis, :jlpt_level
     add_index :kanjis, :grade
   end
@@ -102,7 +112,7 @@ rails generate migration CreateRadicals
 class CreateRadicals < ActiveRecord::Migration[7.1]
   def change
     create_table :radicals do |t|
-      t.string :character, limit: 2, null: false, index: { unique: true }
+      t.string :character, limit: 2, null: false
       t.text :name_ja
       t.text :name_en
       t.text :name_romaji
@@ -110,10 +120,12 @@ class CreateRadicals < ActiveRecord::Migration[7.1]
       t.integer :stroke_count
       t.text :position
       t.text :image_url
-      t.text :animation_urls, array: true, default: []
+      t.json :animation_urls
 
       t.timestamps
     end
+
+    add_index :radicals, :character, unique: true
   end
 end
 ```
@@ -129,21 +141,27 @@ rails generate migration CreateKanjiComposition
 # db/migrate/XXXXXX_create_kanji_radicals.rb
 class CreateKanjiRadicals < ActiveRecord::Migration[7.1]
   def change
-    create_table :kanji_radicals, primary_key: [:kanji_id, :radical_id] do |t|
+    create_table :kanji_radicals do |t|
       t.references :kanji, null: false, foreign_key: { on_delete: :cascade }
       t.references :radical, null: false, foreign_key: { on_delete: :cascade }
       t.boolean :is_primary, default: false
     end
+
+    # Unique index thay cho composite primary key
+    add_index :kanji_radicals, [:kanji_id, :radical_id], unique: true
   end
 end
 
 # db/migrate/XXXXXX_create_kanji_composition.rb
 class CreateKanjiComposition < ActiveRecord::Migration[7.1]
   def change
-    create_table :kanji_compositions, primary_key: [:parent_kanji_id, :component_kanji_id] do |t|
+    create_table :kanji_compositions do |t|
       t.references :parent_kanji, null: false, foreign_key: { to_table: :kanjis, on_delete: :cascade }
       t.references :component_kanji, null: false, foreign_key: { to_table: :kanjis, on_delete: :cascade }
     end
+
+    add_index :kanji_compositions, [:parent_kanji_id, :component_kanji_id],
+              unique: true, name: 'index_kanji_compositions_on_parent_and_component'
   end
 end
 ```
@@ -160,7 +178,7 @@ rails generate migration CreateKanjiVocabularies
 class CreateVocabularies < ActiveRecord::Migration[7.1]
   def change
     create_table :vocabularies do |t|
-      t.text :word, null: false
+      t.string :word, null: false
       t.text :reading_kana
       t.text :reading_romaji
       t.text :meaning_en
@@ -183,10 +201,12 @@ end
 # db/migrate/XXXXXX_create_kanji_vocabularies.rb
 class CreateKanjiVocabularies < ActiveRecord::Migration[7.1]
   def change
-    create_table :kanji_vocabularies, primary_key: [:kanji_id, :vocabulary_id] do |t|
+    create_table :kanji_vocabularies do |t|
       t.references :kanji, null: false, foreign_key: { on_delete: :cascade }
       t.references :vocabulary, null: false, foreign_key: { on_delete: :cascade }
     end
+
+    add_index :kanji_vocabularies, [:kanji_id, :vocabulary_id], unique: true
   end
 end
 ```
@@ -242,8 +262,8 @@ rails generate migration CreateUsers
 class CreateUsers < ActiveRecord::Migration[7.1]
   def change
     create_table :users do |t|
-      t.string :email, index: { unique: true }
-      t.string :username, limit: 50, index: { unique: true }
+      t.string :email
+      t.string :username, limit: 50
       t.string :password_digest  # Nếu dùng has_secure_password
       t.text :full_name
 
@@ -258,6 +278,9 @@ class CreateUsers < ActiveRecord::Migration[7.1]
       t.datetime :last_login
       t.timestamps
     end
+
+    add_index :users, :email, unique: true
+    add_index :users, :username, unique: true
   end
 end
 ```
@@ -277,7 +300,7 @@ rails generate migration CreateUserAchievements
 # db/migrate/XXXXXX_create_user_kanji_progress.rb
 class CreateUserKanjiProgress < ActiveRecord::Migration[7.1]
   def change
-    create_table :user_kanji_progresses, primary_key: [:user_id, :kanji_id] do |t|
+    create_table :user_kanji_progresses do |t|
       t.references :user, null: false, foreign_key: { on_delete: :cascade }
       t.references :kanji, null: false, foreign_key: { on_delete: :cascade }
 
@@ -298,6 +321,7 @@ class CreateUserKanjiProgress < ActiveRecord::Migration[7.1]
       t.datetime :mastered_at
     end
 
+    add_index :user_kanji_progresses, [:user_id, :kanji_id], unique: true
     add_index :user_kanji_progresses, [:user_id, :status]
     add_index :user_kanji_progresses, :next_review_date
   end
@@ -306,7 +330,7 @@ end
 # db/migrate/XXXXXX_create_user_vocabulary_progress.rb
 class CreateUserVocabularyProgress < ActiveRecord::Migration[7.1]
   def change
-    create_table :user_vocabulary_progresses, primary_key: [:user_id, :vocabulary_id] do |t|
+    create_table :user_vocabulary_progresses do |t|
       t.references :user, null: false, foreign_key: { on_delete: :cascade }
       t.references :vocabulary, null: false, foreign_key: { on_delete: :cascade }
 
@@ -322,25 +346,29 @@ class CreateUserVocabularyProgress < ActiveRecord::Migration[7.1]
       t.datetime :last_reviewed_at
       t.datetime :mastered_at
     end
+
+    add_index :user_vocabulary_progresses, [:user_id, :vocabulary_id], unique: true
   end
 end
 
 # db/migrate/XXXXXX_create_user_favorites.rb
 class CreateUserFavorites < ActiveRecord::Migration[7.1]
   def change
-    create_table :user_favorites, primary_key: [:user_id, :kanji_id] do |t|
+    create_table :user_favorites do |t|
       t.references :user, null: false, foreign_key: { on_delete: :cascade }
       t.references :kanji, null: false, foreign_key: { on_delete: :cascade }
 
       t.datetime :created_at
     end
+
+    add_index :user_favorites, [:user_id, :kanji_id], unique: true
   end
 end
 
 # db/migrate/XXXXXX_create_user_learning_paths.rb
 class CreateUserLearningPaths < ActiveRecord::Migration[7.1]
   def change
-    create_table :user_learning_paths, primary_key: [:user_id, :learning_path_id] do |t|
+    create_table :user_learning_paths do |t|
       t.references :user, null: false, foreign_key: { on_delete: :cascade }
       t.references :learning_path, null: false, foreign_key: { on_delete: :cascade }
 
@@ -348,13 +376,15 @@ class CreateUserLearningPaths < ActiveRecord::Migration[7.1]
       t.datetime :started_at
       t.datetime :completed_at
     end
+
+    add_index :user_learning_paths, [:user_id, :learning_path_id], unique: true
   end
 end
 
 # db/migrate/XXXXXX_create_user_daily_activity.rb
 class CreateUserDailyActivity < ActiveRecord::Migration[7.1]
   def change
-    create_table :user_daily_activities, primary_key: [:user_id, :activity_date] do |t|
+    create_table :user_daily_activities do |t|
       t.references :user, null: false, foreign_key: { on_delete: :cascade }
       t.date :activity_date, null: false
 
@@ -363,7 +393,7 @@ class CreateUserDailyActivity < ActiveRecord::Migration[7.1]
       t.integer :time_spent_minutes, default: 0
     end
 
-    add_index :user_daily_activities, [:user_id, :activity_date], order: { activity_date: :desc }
+    add_index :user_daily_activities, [:user_id, :activity_date], unique: true
   end
 end
 
@@ -381,49 +411,44 @@ class CreateUserAchievements < ActiveRecord::Migration[7.1]
 end
 ```
 
-### 8. Migration: Add Full-Text Search
+### 8. Migration: Add Full-Text Search (MySQL FULLTEXT)
 
 ```bash
-rails generate migration AddSearchToKanjis
+rails generate migration AddFulltextSearchToKanjis
+rails generate migration AddFulltextSearchToVocabularies
 ```
 
 ```ruby
-# db/migrate/XXXXXX_add_search_to_kanjis.rb
-class AddSearchToKanjis < ActiveRecord::Migration[7.1]
+# db/migrate/XXXXXX_add_fulltext_search_to_kanjis.rb
+class AddFulltextSearchToKanjis < ActiveRecord::Migration[7.1]
   def up
-    # Add tsvector column
-    add_column :kanjis, :search_vector, :tsvector
+    # Thêm cột search_text để tối ưu full-text search
+    add_column :kanjis, :search_text, :text
 
-    # Create GIN index
+    # Tạo FULLTEXT index (chỉ hoạt động với InnoDB từ MySQL 5.6+)
     execute <<-SQL
-      CREATE INDEX index_kanjis_on_search_vector
-      ON kanjis USING GIN(search_vector);
-    SQL
-
-    # Create trigger to auto-update search_vector
-    execute <<-SQL
-      CREATE OR REPLACE FUNCTION kanjis_search_trigger() RETURNS trigger AS $$
-      BEGIN
-        NEW.search_vector :=
-          to_tsvector('simple', coalesce(NEW.character, '')) ||
-          to_tsvector('simple', coalesce(NEW.meaning_en, '')) ||
-          to_tsvector('simple', coalesce(NEW.meaning_vi, '')) ||
-          to_tsvector('simple', coalesce(array_to_string(NEW.onyomi_romaji, ' '), '')) ||
-          to_tsvector('simple', coalesce(array_to_string(NEW.kunyomi_romaji, ' '), ''));
-        RETURN NEW;
-      END
-      $$ LANGUAGE plpgsql;
-
-      CREATE TRIGGER tsvector_update_trigger
-      BEFORE INSERT OR UPDATE ON kanjis
-      FOR EACH ROW EXECUTE FUNCTION kanjis_search_trigger();
+      CREATE FULLTEXT INDEX idx_kanjis_fulltext
+      ON kanjis(character, meaning_en, meaning_vi, search_text)
     SQL
   end
 
   def down
-    execute "DROP TRIGGER IF EXISTS tsvector_update_trigger ON kanjis;"
-    execute "DROP FUNCTION IF EXISTS kanjis_search_trigger();"
-    remove_column :kanjis, :search_vector
+    execute "DROP INDEX idx_kanjis_fulltext ON kanjis"
+    remove_column :kanjis, :search_text
+  end
+end
+
+# db/migrate/XXXXXX_add_fulltext_search_to_vocabularies.rb
+class AddFulltextSearchToVocabularies < ActiveRecord::Migration[7.1]
+  def up
+    execute <<-SQL
+      CREATE FULLTEXT INDEX idx_vocabularies_fulltext
+      ON vocabularies(word, reading_kana, meaning_en, meaning_vi)
+    SQL
+  end
+
+  def down
+    execute "DROP INDEX idx_vocabularies_fulltext ON vocabularies"
   end
 end
 ```
@@ -476,34 +501,45 @@ class Kanji < ApplicationRecord
   validates :jlpt_level, inclusion: { in: %w[N5 N4 N3 N2 N1], allow_nil: true }
   validates :grade, inclusion: { in: 1..6, allow_nil: true }
 
+  # Callbacks
+  before_save :update_search_text
+
   # Scopes
   scope :by_jlpt, ->(level) { where(jlpt_level: level) }
   scope :by_grade, ->(grade) { where(grade: grade) }
   scope :joyo, -> { where(joyo: true) }
   scope :with_stroke_count, ->(count) { where(stroke_count: count) }
 
-  # Full-text search using pg_search
-  include PgSearch::Model
-  pg_search_scope :search_by_text,
-    against: [:character, :meaning_en, :meaning_vi],
-    associated_against: {
-      radicals: [:name_en, :meaning]
-    },
-    using: {
-      tsearch: {
-        prefix: true,
-        dictionary: 'simple'
-      }
-    }
+  # Full-text search using MySQL MATCH AGAINST
+  def self.search_fulltext(query)
+    return all if query.blank?
 
-  # Class methods
-  def self.search_advanced(query:, jlpt_level: nil, grade: nil, stroke_range: nil)
+    where(
+      "MATCH(character, meaning_en, meaning_vi, search_text) AGAINST(? IN BOOLEAN MODE)",
+      query
+    )
+  end
+
+  # Advanced search
+  def self.search_advanced(query: nil, jlpt_level: nil, grade: nil, stroke_range: nil)
     results = all
-    results = results.search_by_text(query) if query.present?
+    results = results.search_fulltext(query) if query.present?
     results = results.by_jlpt(jlpt_level) if jlpt_level.present?
     results = results.by_grade(grade) if grade.present?
     results = results.where(stroke_count: stroke_range) if stroke_range.present?
     results
+  end
+
+  private
+
+  def update_search_text
+    # Combine all searchable text for fulltext index
+    texts = []
+    texts << onyomi&.join(' ')
+    texts << onyomi_romaji&.join(' ')
+    texts << kunyomi&.join(' ')
+    texts << kunyomi_romaji&.join(' ')
+    self.search_text = texts.compact.join(' ')
   end
 end
 ```
@@ -525,26 +561,26 @@ end
 ```ruby
 # app/models/kanji_radical.rb
 class KanjiRadical < ApplicationRecord
-  self.primary_key = [:kanji_id, :radical_id]
-
   belongs_to :kanji
   belongs_to :radical
+
+  validates :kanji_id, uniqueness: { scope: :radical_id }
 end
 
 # app/models/kanji_composition.rb
 class KanjiComposition < ApplicationRecord
-  self.primary_key = [:parent_kanji_id, :component_kanji_id]
-
   belongs_to :parent_kanji, class_name: 'Kanji'
   belongs_to :component_kanji, class_name: 'Kanji'
+
+  validates :parent_kanji_id, uniqueness: { scope: :component_kanji_id }
 end
 
 # app/models/kanji_vocabulary.rb
 class KanjiVocabulary < ApplicationRecord
-  self.primary_key = [:kanji_id, :vocabulary_id]
-
   belongs_to :kanji
   belongs_to :vocabulary
+
+  validates :kanji_id, uniqueness: { scope: :vocabulary_id }
 end
 ```
 
@@ -562,6 +598,16 @@ class Vocabulary < ApplicationRecord
   validates :jlpt_level, inclusion: { in: %w[N5 N4 N3 N2 N1], allow_nil: true }
 
   scope :by_jlpt, ->(level) { where(jlpt_level: level) }
+
+  # Full-text search
+  def self.search_fulltext(query)
+    return all if query.blank?
+
+    where(
+      "MATCH(word, reading_kana, meaning_en, meaning_vi) AGAINST(? IN BOOLEAN MODE)",
+      query
+    )
+  end
 end
 ```
 
@@ -599,7 +645,7 @@ end
 # app/models/user.rb
 class User < ApplicationRecord
   # Authentication (choose one)
-  # has_secure_password  # For BCrypt
+  has_secure_password  # For BCrypt
   # devise :database_authenticatable, :registerable, :jwt_authenticatable  # For Devise + JWT
 
   # Associations
@@ -626,6 +672,17 @@ class User < ApplicationRecord
   # Callbacks
   after_create :initialize_stats
 
+  # Record daily activity
+  def record_daily_activity!(kanji_reviewed: 0, vocab_reviewed: 0, time_spent_minutes: 0)
+    activity = user_daily_activities.find_or_initialize_by(activity_date: Date.current)
+    activity.kanji_reviewed += kanji_reviewed
+    activity.vocab_reviewed += vocab_reviewed
+    activity.time_spent_minutes += time_spent_minutes
+    activity.save!
+
+    update_streak!
+  end
+
   private
 
   def initialize_stats
@@ -635,6 +692,18 @@ class User < ApplicationRecord
       longest_streak: 0
     )
   end
+
+  def update_streak!
+    yesterday = user_daily_activities.find_by(activity_date: Date.yesterday)
+
+    if yesterday
+      increment!(:current_streak)
+    else
+      update!(current_streak: 1)
+    end
+
+    update!(longest_streak: current_streak) if current_streak > longest_streak
+  end
 end
 ```
 
@@ -643,8 +712,6 @@ end
 ```ruby
 # app/models/user_kanji_progress.rb
 class UserKanjiProgress < ApplicationRecord
-  self.primary_key = [:user_id, :kanji_id]
-
   belongs_to :user
   belongs_to :kanji
 
@@ -660,6 +727,7 @@ class UserKanjiProgress < ApplicationRecord
     2160  # Level 7 -> 8: 3 months
   ].freeze
 
+  validates :user_id, uniqueness: { scope: :kanji_id }
   validates :status, inclusion: { in: %w[learning practicing mastered] }
   validates :srs_level, inclusion: { in: 0..8 }
 
@@ -715,11 +783,10 @@ end
 
 # app/models/user_vocabulary_progress.rb
 class UserVocabularyProgress < ApplicationRecord
-  self.primary_key = [:user_id, :vocabulary_id]
-
   belongs_to :user
   belongs_to :vocabulary
 
+  validates :user_id, uniqueness: { scope: :vocabulary_id }
   validates :status, inclusion: { in: %w[learning practicing mastered] }
   validates :srs_level, inclusion: { in: 0..8 }
 
@@ -728,18 +795,18 @@ end
 
 # app/models/user_favorite.rb
 class UserFavorite < ApplicationRecord
-  self.primary_key = [:user_id, :kanji_id]
-
   belongs_to :user
   belongs_to :kanji
+
+  validates :user_id, uniqueness: { scope: :kanji_id }
 end
 
 # app/models/user_learning_path.rb
 class UserLearningPath < ApplicationRecord
-  self.primary_key = [:user_id, :learning_path_id]
-
   belongs_to :user
   belongs_to :learning_path
+
+  validates :user_id, uniqueness: { scope: :learning_path_id }
 
   def update_progress!
     total_kanjis = learning_path.kanjis.count
@@ -756,11 +823,10 @@ end
 
 # app/models/user_daily_activity.rb
 class UserDailyActivity < ApplicationRecord
-  self.primary_key = [:user_id, :activity_date]
-
   belongs_to :user
 
   validates :activity_date, presence: true
+  validates :user_id, uniqueness: { scope: :activity_date }
 end
 
 # app/models/user_achievement.rb
@@ -808,6 +874,7 @@ radicals_data.each do |radical_data|
     radical.stroke_count = radical_data['strokes']
     radical.position = radical_data['position']
     radical.image_url = radical_data['image']
+    radical.animation_urls = radical_data['animations'] || []
   end
 end
 
@@ -949,6 +1016,73 @@ rails db:seed
 
 ---
 
+## 📖 MySQL-Specific Notes
+
+### 1. JSON Columns vs Serialize
+
+MySQL 5.7+ hỗ trợ JSON datatype native. Bạn có 2 options:
+
+**Option 1: Dùng JSON column (recommended)**
+
+```ruby
+# Migration
+t.json :onyomi
+
+# Model - không cần serialize, Rails tự động handle
+kanji.onyomi = ['イチ', 'イツ']
+kanji.save
+```
+
+**Option 2: Dùng serialize với TEXT column**
+
+```ruby
+# Migration
+t.text :onyomi
+
+# Model
+class Kanji < ApplicationRecord
+  serialize :onyomi, Array
+  serialize :onyomi_romaji, Array
+  serialize :kunyomi, Array
+  serialize :kunyomi_romaji, Array
+end
+```
+
+### 2. Full-Text Search với MySQL
+
+MySQL FULLTEXT search yêu cầu:
+
+- InnoDB engine (MySQL 5.6+) hoặc MyISAM
+- Minimum word length (default: 3-4 chars)
+- Boolean mode cho wildcard search
+
+```ruby
+# Search với wildcard
+Kanji.where(
+  "MATCH(character, meaning_en, meaning_vi) AGAINST(? IN BOOLEAN MODE)",
+  "*#{query}*"
+)
+```
+
+### 3. Composite Primary Keys
+
+MySQL không hỗ trợ composite primary keys tốt như PostgreSQL. Workaround:
+
+```ruby
+# Thay vì
+create_table :kanji_radicals, primary_key: [:kanji_id, :radical_id]
+
+# Dùng
+create_table :kanji_radicals do |t|
+  # Auto-generated id column
+  t.references :kanji
+  t.references :radical
+end
+add_index :kanji_radicals, [:kanji_id, :radical_id], unique: true
+```
+
+---
+
 ## 📖 Next Steps
 
 1. **Setup Routes & Controllers** - Tạo API endpoints theo API_DESIGN.md
@@ -959,4 +1093,4 @@ rails db:seed
 
 ---
 
-Tài liệu này cung cấp đầy đủ migrations, models, và seed script để bắt đầu xây dựng backend Rails cho Luyenkanji! 🚀
+Tài liệu này cung cấp đầy đủ migrations, models, và seed script cho MySQL để bắt đầu xây dựng backend Rails cho Luyenkanji! 🚀
