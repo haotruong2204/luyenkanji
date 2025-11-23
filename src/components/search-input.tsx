@@ -27,7 +27,12 @@ const OPTIONS: SearchOption[] = searchlist.map((el) => {
     kunyomi: el.r,
     meaning: el.m,
     yinhan: el.h,
-    group: el.g === 1 ? "joyo" : el.g === 2 ? "jinmeiyo" : "other",
+    group:
+      el.g === 1
+        ? "Kanji thông dụng"
+        : el.g === 2
+          ? "Kanji dùng cho tên người"
+          : "Hiếm gặp, văn tự",
   };
 });
 
@@ -36,7 +41,7 @@ type SearchOption = {
   kunyomi: string;
   meaning: string;
   yinhan?: string;
-  group: "joyo" | "jinmeiyo" | "other";
+  group: "Kanji thông dụng" | "Kanji dùng cho tên người" | "Hiếm gặp, văn tự";
 };
 
 interface VirtualizedCommandProps {
@@ -74,9 +79,9 @@ const VirtualizedCommand = ({
 
   const flattenedOptions = React.useMemo(() => {
     const groups: { [key: string]: SearchOption[] } = {
-      joyo: [],
-      jinmeiyo: [],
-      other: [],
+      "Kanji thông dụng": [],
+      "Kanji dùng cho tên người": [],
+      "Hiếm gặp, văn tự": [],
     };
 
     filteredOptions.forEach((option) => {

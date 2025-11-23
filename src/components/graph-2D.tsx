@@ -94,17 +94,17 @@ const Graph2D: React.FC<Props> = ({
     let color;
     // if it is he main node
     if (node.id === kanjiInfo.id) {
-      color = "#2B99CF";
+      color = "#0094FF";
     } else if (joyoList?.includes(String(node.id))) {
-      color = "#80c2e2";
+      color = "#FF6C00";
     } else if (jinmeiyoList?.includes(String(node.id))) {
-      color = "#d5ebf5";
+      color = "#FFB700";
     } else {
       color = "#fff";
     }
 
     if (node.id === hoverNode?.id) {
-      color = "#2B99CF";
+      color = "#0094FF";
     }
 
     const radius = (bckgDimensions[1] / 2) * 1.5;

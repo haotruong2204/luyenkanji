@@ -16,22 +16,22 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {
-    default: "Trang chủ",
-    template: "%s | Nhaitungvung.com by @thocodehoctiengnhat",
+    default: "XÓA MÙ KANJI - CHIẾT TỰ",
+    template: "%s | @thocodehoctiengnhat",
   },
   description:
-    "Nhaitungvung.com by @thocodehoctiengnhat là một công cụ học tiếng Nhật hiển thị thông tin chữ Kanji và cách phân tích dưới dạng biểu đồ.",
+    "nhaikanji.com by @thocodehoctiengnhat là một công cụ học tiếng Nhật hiển thị thông tin chữ Kanji và cách phân tích dưới dạng biểu đồ.",
   openGraph: {
-    title: "Nhaitungvung.com by @thocodehoctiengnhat",
+    title: "nhaikanji.com by @thocodehoctiengnhat",
     description:
-      "Nhaitungvung.com by @thocodehoctiengnhat là một công cụ học tiếng Nhật hiển thị thông tin chữ Kanji và cách phân tích dưới dạng biểu đồ.",
+      "nhaikanji.com by @thocodehoctiengnhat là một công cụ học tiếng Nhật hiển thị thông tin chữ Kanji và cách phân tích dưới dạng biểu đồ.",
   },
   icons: {
     icon: "/favicon.svg",
     apple: "/apple-touch-icon.png",
   },
   manifest: "/manifest.json",
-  // themeColor: "#2b99cf",
+  // themeColor: "#0094FF",
 };
 
 const radicalsFont = localFont({

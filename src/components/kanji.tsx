@@ -30,15 +30,17 @@ export const Kanji = ({ kanji, kanjiInfo, graphData, screen }: Props) => {
 
       {/* Info Section */}
       <div className="flex flex-col space-y-2 p-4">
-        <h1
-          className="text-4xl leading-tight sm:text-4xl"
-          style={{
-            fontFamily: '"Zen Maru Gothic", sans-serif',
-            fontWeight: 400,
-            fontStyle: "normal",
-          }}
-        >
-          {kanjiInfo?.id} - {kanjiInfo?.hanzi}
+        <h1 className="text-4xl leading-tight sm:text-4xl">
+          <span
+            style={{
+              fontFamily: '"Zen Maru Gothic", sans-serif',
+              fontWeight: 400,
+              fontStyle: "normal",
+            }}
+          >
+            {kanjiInfo?.id}
+          </span>
+          - {kanjiInfo?.hanzi}
         </h1>
 
         <div className="text-sm leading-6">
