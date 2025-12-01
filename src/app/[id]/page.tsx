@@ -1,5 +1,5 @@
 import composition from "@/../data/composition.json";
-import { getGraphData, getKanjiDataLocal } from "@/lib";
+import { getGraphData, getKanjiDataFromAPI } from "@/lib";
 import { Metadata } from "next";
 import { KanjiPageContent } from "./inner";
 import { Header } from "@/components/header";
@@ -17,6 +17,12 @@ export async function generateMetadata({
   };
 }
 
+// Enable dynamic rendering for SSR
+export const dynamic = 'force-dynamic';
+
+// Optional: Enable ISR with revalidation (comment out if you want pure SSR)
+// export const revalidate = 3600; // Revalidate every 1 hour
+
 export async function generateStaticParams() {
   const kanjis = Object.keys(composition);
   return kanjis.map((kanji) => ({
@@ -24,8 +30,8 @@ export async function generateStaticParams() {
   }));
 }
 
-// Disable dynamic params - only allow pre-generated static pages
-export const dynamicParams = false;
+// Allow dynamic params for SSR
+export const dynamicParams = true;
 
 export default async function KanjiPage({
   params,
@@ -40,7 +46,7 @@ export default async function KanjiPage({
     notFound();
   }
 
-  const kanjiInfo = await getKanjiDataLocal(id);
+  const kanjiInfo = await getKanjiDataFromAPI(id);
   const graphData = await getGraphData(id);
 
   return (

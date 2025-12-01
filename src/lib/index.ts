@@ -18,6 +18,42 @@ export const getAllKanji = () => {
 };
 
 /**
+ * Get data for input kanji from API
+ * @param id input kanji
+ */
+export const getKanjiDataFromAPI: (
+  id: string
+) => Promise<KanjiInfo | null> = async (id) => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const url = `${apiUrl}/kanjis/${encodeURIComponent(id)}/ui_format`;
+
+  try {
+    const response = await fetch(url, {
+      next: {
+        revalidate: 3600, // Revalidate every 1 hour
+      },
+      headers: {
+        Accept: "application/json",
+        "User-Agent": "Luyenkanji-NextJS/1.0",
+      },
+    });
+
+    if (!response.ok) {
+      console.error(`API error: ${response.status} ${response.statusText}`);
+      // Fallback to local data if API fails
+      return await getKanjiDataLocal(id);
+    }
+
+    const data = await response.json();
+    return data as KanjiInfo;
+  } catch (error) {
+    console.error("Failed to fetch kanji data from API:", error);
+    // Fallback to local data if API fails
+    return await getKanjiDataLocal(id);
+  }
+};
+
+/**
  * Get data for input kanji from KanjiAlive and Jisho.org saved locally
  * @param id input kanji
  */
@@ -140,7 +176,7 @@ export const getGraphData = async (id: string) => {
     inNodeList.map(async (x) => {
       return {
         id: x,
-        data: await getKanjiDataLocal(x),
+        data: await getKanjiDataFromAPI(x),
       };
     })
   );
@@ -149,7 +185,7 @@ export const getGraphData = async (id: string) => {
     outNodeList.map(async (x) => {
       return {
         id: x,
-        data: await getKanjiDataLocal(x),
+        data: await getKanjiDataFromAPI(x),
       };
     })
   );
